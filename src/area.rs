@@ -3,9 +3,7 @@
 // Standard includes.
 
 // Internal includes.
-use super::{
-    Coord, HasArea, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, Size,
-};
+use super::{Coord, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, Size};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Area {
