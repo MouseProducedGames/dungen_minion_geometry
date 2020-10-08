@@ -3,7 +3,7 @@
 // Standard includes.
 
 // Internal includes.
-use super::{HasSize, Length};
+use super::{IsSize, Length};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Size {
@@ -15,30 +15,22 @@ impl Size {
     pub fn new(width: Length, height: Length) -> Self {
         Self { height, width }
     }
+}
 
-    pub fn height(&self) -> Length {
+impl IsSize for Size {
+    fn height(&self) -> Length {
         self.height
     }
 
-    pub fn height_mut(&mut self) -> &mut Length {
+    fn height_mut(&mut self) -> &mut Length {
         &mut self.height
     }
 
-    pub fn width(&self) -> Length {
+    fn width(&self) -> Length {
         self.width
     }
 
-    pub fn width_mut(&mut self) -> &mut Length {
+    fn width_mut(&mut self) -> &mut Length {
         &mut self.width
-    }
-}
-
-impl HasSize for Size {
-    fn size(&self) -> &Self {
-        self
-    }
-
-    fn size_mut(&mut self) -> &mut Self {
-        self
     }
 }

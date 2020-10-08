@@ -4,7 +4,7 @@
 use std::ops::{Add, Sub};
 
 // Internal includes.
-use super::{HasLocalPosition, Length};
+use super::{IsLocalPosition, Length};
 
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct LocalPosition {
@@ -13,22 +13,6 @@ pub struct LocalPosition {
 }
 
 impl LocalPosition {
-    pub fn x(&self) -> Length {
-        self.x
-    }
-
-    pub fn x_mut(&mut self) -> &mut Length {
-        &mut self.x
-    }
-
-    pub fn y(&self) -> Length {
-        self.y
-    }
-
-    pub fn y_mut(&mut self) -> &mut Length {
-        &mut self.y
-    }
-
     pub fn new(x: Length, y: Length) -> Self {
         Self { x, y }
     }
@@ -45,13 +29,21 @@ impl Add for LocalPosition {
     }
 }
 
-impl HasLocalPosition for LocalPosition {
-    fn local(&self) -> &Self {
-        self
+impl IsLocalPosition for LocalPosition {
+    fn x(&self) -> Length {
+        self.x
     }
 
-    fn local_mut(&mut self) -> &mut Self {
-        self
+    fn x_mut(&mut self) -> &mut Length {
+        &mut self.x
+    }
+
+    fn y(&self) -> Length {
+        self.y
+    }
+
+    fn y_mut(&mut self) -> &mut Length {
+        &mut self.y
     }
 }
 

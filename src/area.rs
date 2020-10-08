@@ -3,7 +3,9 @@
 // Standard includes.
 
 // Internal includes.
-use super::{HasArea, HasPosition, HasSize, Position, Size};
+use super::{
+    Coord, HasArea, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, Size,
+};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Area {
@@ -14,16 +16,6 @@ pub struct Area {
 impl Area {
     pub fn new(pos: Position, size: Size) -> Self {
         Self { pos, size }
-    }
-}
-
-impl HasArea for Area {
-    fn area(&self) -> &Self {
-        self
-    }
-
-    fn area_mut(&mut self) -> &mut Self {
-        self
     }
 }
 
@@ -44,5 +36,43 @@ impl HasSize for Area {
 
     fn size_mut(&mut self) -> &mut Size {
         &mut self.size
+    }
+}
+
+impl IsArea for Area {}
+
+impl IsPosition for Area {
+    fn x(&self) -> Coord {
+        self.pos.x()
+    }
+
+    fn x_mut(&mut self) -> &mut Coord {
+        self.pos.x_mut()
+    }
+
+    fn y(&self) -> Coord {
+        self.pos.y()
+    }
+
+    fn y_mut(&mut self) -> &mut Coord {
+        self.pos.y_mut()
+    }
+}
+
+impl IsSize for Area {
+    fn height(&self) -> Length {
+        self.size.height()
+    }
+
+    fn height_mut(&mut self) -> &mut Length {
+        self.size.height_mut()
+    }
+
+    fn width(&self) -> Length {
+        self.size.width()
+    }
+
+    fn width_mut(&mut self) -> &mut Length {
+        self.size.width_mut()
     }
 }
