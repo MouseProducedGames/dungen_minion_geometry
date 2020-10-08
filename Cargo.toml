@@ -1,5 +1,5 @@
 [package]
-name = "generic_dungen_geometry"
+name = "dungen_minion_geometry"
 version = "0.1.0"
 authors = ["MouseProducedGames <largemouse@gmail.com>"]
 edition = "2018"
