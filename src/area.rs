@@ -5,6 +5,9 @@
 // Internal includes.
 use super::{Coord, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, Size};
 
+/// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
+/// 
+/// As such, `Area` has an x and y [`Coord`](type.Coord.html), and a width and height [`Length`](type.Length.html). In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system. 
 #[derive(Copy, Clone, Debug)]
 pub struct Area {
     pos: Position,
@@ -12,6 +15,21 @@ pub struct Area {
 }
 
 impl Area {
+    /// Creates a new `Area` with the given [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let value: Area = Area::new(Position::new(5, -3), Size::new(42, 24));
+    /// 
+    /// assert!(*value.pos() == Position::new(5, -3));
+    /// assert!(*value.size() == Size::new(42, 24));
+    /// 
+    /// assert!(value.x() == 5);
+    /// assert!(value.y() == -3);
+    /// 
+    /// assert!(value.width() == 42);
+    /// assert!(value.height() == 24);
+    /// ```
     pub fn new(pos: Position, size: Size) -> Self {
         Self { pos, size }
     }

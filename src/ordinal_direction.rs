@@ -7,11 +7,36 @@ use std::ops::{Add, Sub};
 // Internal includes.
 use super::OrdinalRotation;
 
+/// Defines a direction on a cartesian plane where each direction is an orthogonal 90-degree vector.
+///
+/// ```
+/// # use dungen_minion_geometry::*;
+/// let north: OrdinalDirection = OrdinalDirection::North;
+/// let east: OrdinalDirection = OrdinalDirection::East;
+/// let south: OrdinalDirection = OrdinalDirection::South;
+/// let west: OrdinalDirection = OrdinalDirection::West;
+///
+/// // Moving from north to east is a 90-degree rotation to the right.
+/// assert!((east - north) == OrdinalRotation::Right90);
+/// 
+/// // Moving from north to south is a full 180-degree rotation.
+/// assert!((south - north) == OrdinalRotation::Full180);
+/// 
+/// // Moving from north to west is a 90-degree rotation to the left.
+/// assert!((west - north) == OrdinalRotation::Left90);
+/// 
+/// // Moving from north to north is defined as not a rotation, even if you rotated to get there.
+/// assert!((north - north) == OrdinalRotation::None);
+/// ```
 #[derive(Copy, Clone, Debug, Display)]
 pub enum OrdinalDirection {
+    /// Represents a cartesian (0, +1) direction.
     North,
+    /// Represents a cartesian (+1, 0) direction.
     East,
+    /// Represents a cartesian (0, -1) direction.
     South,
+    /// Represents a cartesian (-1, 0) direction.
     West,
 }
 

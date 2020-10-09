@@ -1,3 +1,10 @@
+#![warn(missing_docs)]
+#![warn(missing_doc_code_examples)]
+
+//! Defines various geometry enums, structs, traits, and types for the `dungen_minion` crate. As such, dungen_minion_geometry is not suitable as a general geometry crate.
+//! 
+//! As the purpose of this crate is to provide data types for `dungen_minion` and `dungen_minion`'s other dependent crates to consume, the data types are defined here, while their general usages are defined in those other crates.
+
 // External includes.
 #[macro_use]
 extern crate derive_more;
@@ -25,7 +32,7 @@ mod ordinal_rotation;
 mod placed;
 mod placed_object;
 mod placed_shape;
-mod position;
+#[doc(inline)] mod position;
 mod provides_area;
 mod provides_local_position;
 mod provides_position;
