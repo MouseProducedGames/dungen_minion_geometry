@@ -1,4 +1,6 @@
 // External includes.
+#[macro_use]
+extern crate derive_more;
 
 // Standard includes.
 
@@ -18,6 +20,8 @@ mod is_local_position;
 mod is_position;
 mod is_size;
 mod local_position;
+mod ordinal_direction;
+mod ordinal_rotation;
 mod placed;
 mod placed_object;
 mod placed_shape;
@@ -44,6 +48,8 @@ pub use is_local_position::IsLocalPosition;
 pub use is_position::IsPosition;
 pub use is_size::IsSize;
 pub use local_position::LocalPosition;
+pub use ordinal_direction::OrdinalDirection;
+pub use ordinal_rotation::OrdinalRotation;
 pub use placed::Placed;
 pub use placed_object::PlacedObject;
 pub use placed_shape::PlacedShape;

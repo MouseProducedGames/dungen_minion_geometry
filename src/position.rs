@@ -4,7 +4,7 @@
 use std::ops::{Add, Sub};
 
 // Internal includes.
-use super::{Coord, IsPosition};
+use super::{Coord, IsPosition, OrdinalRotation};
 
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Position {
@@ -15,6 +15,15 @@ pub struct Position {
 impl Position {
     pub fn new(x: Coord, y: Coord) -> Self {
         Self { x, y }
+    }
+
+    pub fn rotated(&self, rotation: OrdinalRotation) -> Self {
+        match rotation {
+            OrdinalRotation::None => *self,
+            OrdinalRotation::Right90 => Self::new(self.y(), -self.x()),
+            OrdinalRotation::Full180 => Self::new(-self.x(), -self.y()),
+            OrdinalRotation::Left90 => Self::new(-self.y(), self.x()),
+        }
     }
 }
 
