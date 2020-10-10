@@ -28,7 +28,7 @@ use super::OrdinalRotation;
 /// // Moving from north to north is defined as not a rotation, even if you rotated to get there.
 /// assert!((north - north) == OrdinalRotation::None);
 /// ```
-#[derive(Copy, Clone, Debug, Display)]
+#[derive(Copy, Clone, Debug, Display, Eq, Hash, PartialEq)]
 pub enum OrdinalDirection {
     /// Represents a cartesian (0, +1) direction.
     North,

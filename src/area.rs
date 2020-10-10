@@ -11,7 +11,7 @@ use super::{
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
 ///
 /// As such, `Area` has an x and y [`Coord`](type.Coord.html), and a width and height [`Length`](type.Length.html). In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system.
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Area {
     position: Position,
     size: Size,

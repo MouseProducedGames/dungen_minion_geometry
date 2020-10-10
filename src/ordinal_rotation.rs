@@ -24,7 +24,7 @@ use std::ops::{Add, Sub};
 /// let rotation_back_to_none: OrdinalRotation = rotation_left90 + OrdinalRotation::Right90;
 /// assert!(rotation_back_to_none== OrdinalRotation::None);
 /// ```
-#[derive(Copy, Clone, Debug, Display, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Display, Eq, Hash, PartialEq)]
 pub enum OrdinalRotation {
     /// No rotation; provided for the sake of completness.
     None,

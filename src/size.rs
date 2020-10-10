@@ -8,7 +8,7 @@ use super::{HasSize, IsSize, Length, ProvidesSize};
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
 ///
 /// Size does not have a position, and its width and height can each be an integer zero, or positive value. In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system.
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Size {
     height: Length,
     width: Length,
