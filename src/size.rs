@@ -3,7 +3,7 @@
 // Standard includes.
 
 // Internal includes.
-use super::{IsSize, Length};
+use super::{IsSize, Length, ProvidesSize};
 
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
 ///
@@ -43,5 +43,11 @@ impl IsSize for Size {
 
     fn width_mut(&mut self) -> &mut Length {
         &mut self.width
+    }
+}
+
+impl ProvidesSize for Size {
+    fn provide_size(&self) -> Size {
+        *self
     }
 }

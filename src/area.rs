@@ -3,7 +3,9 @@
 // Standard includes.
 
 // Internal includes.
-use super::{Coord, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, Size};
+use super::{
+    Coord, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, ProvidesArea, Size,
+};
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
 ///
@@ -90,5 +92,11 @@ impl IsSize for Area {
 
     fn width_mut(&mut self) -> &mut Length {
         self.size.width_mut()
+    }
+}
+
+impl ProvidesArea for Area {
+    fn provide_area(&self) -> Area {
+        *self
     }
 }
