@@ -58,6 +58,6 @@ impl IsSize for Size {
 
 impl ProvidesSize for Size {
     fn provide_size(&self) -> Size {
-        *self
+        *self.size()
     }
 }

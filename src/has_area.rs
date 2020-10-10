@@ -3,10 +3,10 @@
 // Standard includes.
 
 // Internal includes.
-use super::{Area, HasPosition, HasSize};
+use super::{Area, HasPosition, HasSize, ProvidesArea};
 
 /// Defines a type that has an [`Area`](struct.Area.html), but is not necessarily itself an `Area` (see [`IsArea`](trait.IsArea.html)).
-pub trait HasArea: HasPosition + HasSize {
+pub trait HasArea: HasPosition + HasSize + ProvidesArea {
     /// Returns a reference to the instance's `Area`.
     fn area(&self) -> &Area;
 

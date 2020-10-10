@@ -3,10 +3,10 @@
 // Standard includes.
 
 // Internal includes.
-use super::Size;
+use super::{ProvidesSize, Size};
 
 /// Defines a type that has a [`Size`](struct.Size.html), but is not necessarily itself a `Size` (see [`IsSize`](trait.IsSize.html)).
-pub trait HasSize {
+pub trait HasSize: ProvidesSize {
     /// Returns a reference to the instance's `Size`.
     fn size(&self) -> &Size;
 

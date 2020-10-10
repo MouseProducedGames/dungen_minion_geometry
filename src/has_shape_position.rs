@@ -3,10 +3,10 @@
 // Standard includes.
 
 // Internal includes.
-use super::ShapePosition;
+use super::{ProvidesShapePosition, ShapePosition};
 
 /// Defines a type that has a [`ShapePosition`](struct.ShapePosition.html), but is not necessarily itself a `ShapePosition` (see [`IsShapePosition`](trait.IsShapePosition.html)).
-pub trait HasShapePosition {
+pub trait HasShapePosition: ProvidesShapePosition {
     /// Returns a reference to the instance's `ShapePosition`.
     fn shape_position(&self) -> &ShapePosition;
 
