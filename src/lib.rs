@@ -13,6 +13,7 @@ extern crate derive_more;
 
 // Internal includes.
 mod area;
+mod area_range;
 mod defines;
 mod has_area;
 mod has_position;
@@ -45,6 +46,7 @@ mod size;
 mod size_range;
 
 pub use area::Area;
+pub use area_range::AreaRange;
 pub use defines::{Coord, Length};
 pub use has_area::HasArea;
 pub use has_position::HasPosition;
