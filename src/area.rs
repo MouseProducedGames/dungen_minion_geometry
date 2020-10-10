@@ -23,6 +23,9 @@ impl Area {
     ///
     /// assert!(*value.pos() == Position::new(5, -3));
     /// assert!(*value.size() == Size::new(42, 24));
+    ///
+    /// assert!(value.width() == 42);
+    /// assert!(value.height() == 24);
     /// ```
     pub fn new(pos: Position, size: Size) -> Self {
         Self { pos, size }
