@@ -38,6 +38,7 @@ where
     }
 }
 
+#[allow(dead_code)]
 fn size_provider<TFunc: Fn() -> Size>(t_func: TFunc) -> SizeProvider<TFunc> {
     SizeProvider { func: t_func }
 }
