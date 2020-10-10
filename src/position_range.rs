@@ -19,10 +19,6 @@ use super::{Coord, IsPosition, Position, ProvidesPosition, ProvidesShapePosition
 /// // Random generators are hard to guarantee. But this should be viable.
 /// for _ in 0..5_000 {
 ///     let rand_position = position_range.provide_position();
-///     if rand_position.x() < 4 || rand_position.x() > 13
-///         || rand_position.y() < 14 || rand_position.y() > 23 {
-///         println!("{}", rand_position);
-///     }
 ///     assert!(rand_position.x() >= 4 && rand_position.x() <= 13);
 ///     assert!(rand_position.y() >= 14 && rand_position.y() <= 23);
 /// }
@@ -71,6 +67,23 @@ impl ProvidesPosition for PositionRange {
 }
 
 impl ProvidesShapePosition for PositionRange {
+    /// Provides a range of [`ShapePosition`](struct.ShapePosition.html)s, from a start shape position to an end shape position.
+    ///
+    /// This method provide a random shape position between the start shape position in the range, and the end shape position in the range. The x- and y-components of the returned `ShapePosition` are bounded together, such that the returned random shape position is somewhere along a tiled line from the start to the end shape position.
+    ///
+    /// ShapePosition generation treats the start of the PositionRange as the (0, 0) position.
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// // The end position is an exclusive bound.
+    /// // The divergent min and max for x and y guarantee that the samples are separate.
+    /// let position_range = PositionRange::new(Position::new(4, 14), Position::new(13, 23));
+    /// // Random generators are hard to guarantee. But this should be viable.
+    /// for _ in 0..5_000 {
+    ///     let rand_shape_position = position_range.provide_shape_position();
+    ///     assert!(rand_shape_position.x() >= 0 && rand_shape_position.x() <= 9);
+    ///     assert!(rand_shape_position.y() >= 0 && rand_shape_position.y() <= 19);
+    /// }
+    /// ```
     fn provide_shape_position(&self) -> ShapePosition {
         let position = self.provide_position() - self.start;
         ShapePosition::new(position.x(), position.x())
