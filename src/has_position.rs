@@ -3,10 +3,10 @@
 // Standard includes.
 
 // Internal includes.
-use super::{Position, ProvidesPosition};
+use super::Position;
 
 /// Defines a type that has a [`Position`](struct.Position.html), but is not necessarily itself a `Position` (see [`IsPosition`](trait.IsPosition.html)).
-pub trait HasPosition: ProvidesPosition {
+pub trait HasPosition {
     /// Returns a reference to the instance's `Position`.
     fn position(&self) -> &Position;
 
