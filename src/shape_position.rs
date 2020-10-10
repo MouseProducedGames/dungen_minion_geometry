@@ -6,8 +6,8 @@ use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
 use super::{
-    Coord, HasShapePosition, IsPosition, IsShapePosition, OrdinalRotation, Position,
-    ProvidesShapePosition,
+    Coord, HasShapePosition, IsPosition, IsShapePosition, OrdinalDirection, OrdinalRotation,
+    Position, ProvidesShapePosition,
 };
 
 /// A position relative to the top-left corner of a shape.
@@ -63,8 +63,28 @@ impl Add for ShapePosition {
     }
 }
 
+impl From<OrdinalDirection> for ShapePosition {
+    /// Converts a `ShapePosition` from an `OrdinalDirection`.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// assert!(ShapePosition::from(OrdinalDirection::North) == ShapePosition::new(0, -1));
+    /// assert!(ShapePosition::from(OrdinalDirection::East) == ShapePosition::new(1, 0));
+    /// assert!(ShapePosition::from(OrdinalDirection::South) == ShapePosition::new(0, 1));
+    /// assert!(ShapePosition::from(OrdinalDirection::West) == ShapePosition::new(-1, 0));
+    /// ```
+    fn from(ordinal_direction: OrdinalDirection) -> Self {
+        match ordinal_direction {
+            OrdinalDirection::North => ShapePosition::new(0, -1),
+            OrdinalDirection::East => ShapePosition::new(1, 0),
+            OrdinalDirection::South => ShapePosition::new(0, 1),
+            OrdinalDirection::West => ShapePosition::new(-1, 0),
+        }
+    }
+}
+
 impl From<Position> for ShapePosition {
-    /// Converts a ShapePosition directly from a Position.
+    /// Converts a `ShapePosition` directly from a `Position`.
     ///
     /// ```
     /// # use dungen_minion_geometry::*;

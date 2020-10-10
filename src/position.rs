@@ -5,8 +5,8 @@ use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
 use super::{
-    Coord, HasPosition, IsPosition, IsShapePosition, OrdinalRotation, ProvidesPosition,
-    ShapePosition,
+    Coord, HasPosition, IsPosition, IsShapePosition, OrdinalDirection, OrdinalRotation,
+    ProvidesPosition, ShapePosition,
 };
 
 /// A position on a cartesian coordinate system.
@@ -44,8 +44,28 @@ impl Add for Position {
     }
 }
 
+impl From<OrdinalDirection> for Position {
+    /// Converts a `Position` from an `OrdinalDirection`.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// assert!(Position::from(OrdinalDirection::North) == Position::new(0, -1));
+    /// assert!(Position::from(OrdinalDirection::East) == Position::new(1, 0));
+    /// assert!(Position::from(OrdinalDirection::South) == Position::new(0, 1));
+    /// assert!(Position::from(OrdinalDirection::West) == Position::new(-1, 0));
+    /// ```
+    fn from(ordinal_direction: OrdinalDirection) -> Self {
+        match ordinal_direction {
+            OrdinalDirection::North => Position::new(0, -1),
+            OrdinalDirection::East => Position::new(1, 0),
+            OrdinalDirection::South => Position::new(0, 1),
+            OrdinalDirection::West => Position::new(-1, 0),
+        }
+    }
+}
+
 impl From<ShapePosition> for Position {
-    /// Converts a Position directly from a ShapePosition.
+    /// Converts a `Position` directly from a `ShapePosition`.
     ///
     /// ```
     /// # use dungen_minion_geometry::*;
