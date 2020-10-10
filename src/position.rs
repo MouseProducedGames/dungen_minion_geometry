@@ -7,8 +7,8 @@ use std::ops::{Add, Sub};
 use super::{Coord, IsPosition, OrdinalRotation};
 
 /// A position on a cartesian coordinate system.
-/// 
-/// The x and y components of `Position` can be each be an integer negative, zero, or positive value. In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system. 
+///
+/// The x and y components of `Position` can be each be an integer negative, zero, or positive value. In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system.
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Position {
     x: Coord,
@@ -30,19 +30,19 @@ impl Position {
     }
 
     /// Returns a copy of `self` after an [`OrdinalRotation`](enum.OrdinalRotation.html).
-    /// 
+    ///
     /// ```
     /// # use dungen_minion_geometry::*;
     /// let north_raw: Position = Position::new(0, 1);
     /// let east_raw: Position = Position::new(1, 0);
     /// let south_raw: Position = Position::new(0, -1);
     /// let west_raw: Position = Position::new(-1, 0);
-    /// 
+    ///
     /// let north_from_north_raw: Position = north_raw.rotated(OrdinalRotation::None);
     /// let east_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Right90);
     /// let south_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Full180);
     /// let west_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Left90);
-    /// 
+    ///
     /// assert!(north_from_north_raw == north_raw);
     /// assert!(east_from_north_raw == east_raw);
     /// assert!(south_from_north_raw == south_raw);

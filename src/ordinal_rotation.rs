@@ -11,16 +11,16 @@ use std::ops::{Add, Sub};
 /// ```
 /// # use dungen_minion_geometry::*;
 /// let rotation_none: OrdinalRotation = OrdinalRotation::None;
-/// 
+///
 /// let rotation_right90: OrdinalRotation = rotation_none + OrdinalRotation::Right90;
 /// assert!(rotation_right90 == OrdinalRotation::Right90);
-/// 
+///
 /// let rotation_full180: OrdinalRotation = rotation_right90 + OrdinalRotation::Right90;
 /// assert!(rotation_full180 == OrdinalRotation::Full180);
-/// 
+///
 /// let rotation_left90: OrdinalRotation = rotation_full180 + OrdinalRotation::Right90;
 /// assert!(rotation_left90 == OrdinalRotation::Left90);
-/// 
+///
 /// let rotation_back_to_none: OrdinalRotation = rotation_left90 + OrdinalRotation::Right90;
 /// assert!(rotation_back_to_none== OrdinalRotation::None);
 /// ```

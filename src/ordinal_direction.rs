@@ -18,13 +18,13 @@ use super::OrdinalRotation;
 ///
 /// // Moving from north to east is a 90-degree rotation to the right.
 /// assert!((east - north) == OrdinalRotation::Right90);
-/// 
+///
 /// // Moving from north to south is a full 180-degree rotation.
 /// assert!((south - north) == OrdinalRotation::Full180);
-/// 
+///
 /// // Moving from north to west is a 90-degree rotation to the left.
 /// assert!((west - north) == OrdinalRotation::Left90);
-/// 
+///
 /// // Moving from north to north is defined as not a rotation, even if you rotated to get there.
 /// assert!((north - north) == OrdinalRotation::None);
 /// ```
