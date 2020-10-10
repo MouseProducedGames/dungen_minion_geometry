@@ -17,6 +17,10 @@ use super::{
 /// In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system; moving down or to the right results in increasingly positive numbers.
 ///
 /// `ShapePosition` is only valid if each of its components are a zero, or positive, value.
+///
+/// When considering the relation between `ShapePosition` and [`Position`](struct.Position.html), it is appropriate to conisder `ShapePosition` as being a local offset from a `Position`.
+///
+/// When considering the relation between `ShapePosition` and [`Size`](struct.Size.html), it is appropriate to conisder `ShapePosition` as being a local offset from, (or possibly an exact match to) the top-left, or (0, 0), `ShapePosition` on a `Size`.
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct ShapePosition {
     x: Coord,
