@@ -33,6 +33,7 @@ mod placed_object;
 mod placed_shape;
 #[doc(inline)]
 mod position;
+mod position_range;
 mod provides_area;
 mod provides_position;
 mod provides_shape_position;
@@ -62,6 +63,7 @@ pub use placed::Placed;
 pub use placed_object::PlacedObject;
 pub use placed_shape::PlacedShape;
 pub use position::Position;
+pub use position_range::PositionRange;
 pub use provides_area::ProvidesArea;
 pub use provides_position::ProvidesPosition;
 pub use provides_shape_position::ProvidesShapePosition;
