@@ -5,7 +5,7 @@ use rand::{thread_rng, Rng};
 // Standard includes.
 
 // Internal includes.
-use super::{IsSize, ProvidesSize, Size};
+use super::{Coord, IsSize, ProvidesShapePosition, ProvidesSize, ShapePosition, Size};
 
 /// Provides a range of [`Size`](struct.Size.html)s, from a minimum size to a maximum size.
 ///
@@ -58,5 +58,12 @@ impl Distribution<Size> for SizeRange {
 impl ProvidesSize for SizeRange {
     fn provide_size(&self) -> Size {
         self.sample(&mut thread_rng())
+    }
+}
+
+impl ProvidesShapePosition for SizeRange {
+    fn provide_shape_position(&self) -> ShapePosition {
+        let size = self.provide_size();
+        ShapePosition::new(size.width() as Coord, size.height() as Coord)
     }
 }
