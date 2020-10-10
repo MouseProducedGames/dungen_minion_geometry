@@ -1,10 +1,10 @@
 // External includes.
 
 // Standard includes.
-use std::ops::{Add, Sub};
+use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
-use super::{Coord, HasShapePosition, IsShapePosition, ProvidesShapePosition};
+use super::{Coord, HasShapePosition, IsShapePosition, OrdinalRotation, ProvidesShapePosition};
 
 /// A position relative to the top-left corner of a shape.
 ///
@@ -84,6 +84,38 @@ impl IsShapePosition for ShapePosition {
 
     fn y_mut(&mut self) -> &mut Coord {
         &mut self.y
+    }
+}
+
+impl Mul<OrdinalRotation> for ShapePosition {
+    type Output = Self;
+
+    /// Returns a copy of `self` after an [`OrdinalRotation`](enum.OrdinalRotation.html).
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let north_raw: ShapePosition = ShapePosition::new(0, 1);
+    /// let east_raw: ShapePosition = ShapePosition::new(1, 0);
+    /// let south_raw: ShapePosition = ShapePosition::new(0, -1);
+    /// let west_raw: ShapePosition = ShapePosition::new(-1, 0);
+    ///
+    /// let north_from_north_raw: ShapePosition = north_raw * OrdinalRotation::None;
+    /// let east_from_north_raw: ShapePosition = north_raw * OrdinalRotation::Right90;
+    /// let south_from_north_raw: ShapePosition = north_raw * OrdinalRotation::Full180;
+    /// let west_from_north_raw: ShapePosition = north_raw * OrdinalRotation::Left90;
+    ///
+    /// assert!(north_from_north_raw == north_raw);
+    /// assert!(east_from_north_raw == east_raw);
+    /// assert!(south_from_north_raw == south_raw);
+    /// assert!(west_from_north_raw == west_raw);
+    /// ```
+    fn mul(self, rotation: OrdinalRotation) -> Self::Output {
+        match rotation {
+            OrdinalRotation::None => self,
+            OrdinalRotation::Right90 => Self::new(self.y(), -self.x()),
+            OrdinalRotation::Full180 => Self::new(-self.x(), -self.y()),
+            OrdinalRotation::Left90 => Self::new(-self.y(), self.x()),
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 // External includes.
 
 // Standard includes.
-use std::ops::{Add, Sub};
+use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
 use super::{Coord, HasPosition, IsPosition, OrdinalRotation, ProvidesPosition};
@@ -27,34 +27,6 @@ impl Position {
     /// ```
     pub fn new(x: Coord, y: Coord) -> Self {
         Self { x, y }
-    }
-
-    /// Returns a copy of `self` after an [`OrdinalRotation`](enum.OrdinalRotation.html).
-    ///
-    /// ```
-    /// # use dungen_minion_geometry::*;
-    /// let north_raw: Position = Position::new(0, 1);
-    /// let east_raw: Position = Position::new(1, 0);
-    /// let south_raw: Position = Position::new(0, -1);
-    /// let west_raw: Position = Position::new(-1, 0);
-    ///
-    /// let north_from_north_raw: Position = north_raw.rotated(OrdinalRotation::None);
-    /// let east_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Right90);
-    /// let south_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Full180);
-    /// let west_from_north_raw: Position = north_raw.rotated(OrdinalRotation::Left90);
-    ///
-    /// assert!(north_from_north_raw == north_raw);
-    /// assert!(east_from_north_raw == east_raw);
-    /// assert!(south_from_north_raw == south_raw);
-    /// assert!(west_from_north_raw == west_raw);
-    /// ```
-    pub fn rotated(&self, rotation: OrdinalRotation) -> Self {
-        match rotation {
-            OrdinalRotation::None => *self,
-            OrdinalRotation::Right90 => Self::new(self.y(), -self.x()),
-            OrdinalRotation::Full180 => Self::new(-self.x(), -self.y()),
-            OrdinalRotation::Left90 => Self::new(-self.y(), self.x()),
-        }
     }
 }
 
@@ -94,6 +66,38 @@ impl IsPosition for Position {
 
     fn y_mut(&mut self) -> &mut Coord {
         &mut self.y
+    }
+}
+
+impl Mul<OrdinalRotation> for Position {
+    type Output = Self;
+
+    /// Returns a copy of `self` after an [`OrdinalRotation`](enum.OrdinalRotation.html).
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let north_raw: Position = Position::new(0, 1);
+    /// let east_raw: Position = Position::new(1, 0);
+    /// let south_raw: Position = Position::new(0, -1);
+    /// let west_raw: Position = Position::new(-1, 0);
+    ///
+    /// let north_from_north_raw: Position = north_raw * OrdinalRotation::None;
+    /// let east_from_north_raw: Position = north_raw * OrdinalRotation::Right90;
+    /// let south_from_north_raw: Position = north_raw * OrdinalRotation::Full180;
+    /// let west_from_north_raw: Position = north_raw * OrdinalRotation::Left90;
+    ///
+    /// assert!(north_from_north_raw == north_raw);
+    /// assert!(east_from_north_raw == east_raw);
+    /// assert!(south_from_north_raw == south_raw);
+    /// assert!(west_from_north_raw == west_raw);
+    /// ```
+    fn mul(self, rotation: OrdinalRotation) -> Self::Output {
+        match rotation {
+            OrdinalRotation::None => self,
+            OrdinalRotation::Right90 => Self::new(self.y(), -self.x()),
+            OrdinalRotation::Full180 => Self::new(-self.x(), -self.y()),
+            OrdinalRotation::Left90 => Self::new(-self.y(), self.x()),
+        }
     }
 }
 
