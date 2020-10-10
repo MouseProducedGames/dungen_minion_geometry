@@ -13,3 +13,4 @@ readme = "readme.md"
 
 [dependencies]
 derive_more = "0.99.11"
+rand = "0.7.3"

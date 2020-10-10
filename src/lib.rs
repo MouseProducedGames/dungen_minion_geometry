@@ -40,6 +40,7 @@ mod provides_size;
 mod shape;
 mod shape_position;
 mod size;
+mod size_range;
 
 pub use area::Area;
 pub use defines::{Coord, Length};
@@ -68,6 +69,7 @@ pub use provides_size::ProvidesSize;
 pub use shape::Shape;
 pub use shape_position::ShapePosition;
 pub use size::Size;
+pub use size_range::SizeRange;
 
 #[cfg(test)]
 mod tests {
