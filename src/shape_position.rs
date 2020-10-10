@@ -4,7 +4,7 @@
 use std::ops::{Add, Sub};
 
 // Internal includes.
-use super::{Coord, IsShapePosition, ProvidesShapePosition};
+use super::{Coord, HasShapePosition, IsShapePosition, ProvidesShapePosition};
 
 /// A position relative to the top-left corner of a shape.
 ///
@@ -56,6 +56,16 @@ impl Add for ShapePosition {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl HasShapePosition for ShapePosition {
+    fn shape_position(&self) -> &ShapePosition {
+        self
+    }
+
+    fn shape_position_mut(&mut self) -> &mut ShapePosition {
+        self
     }
 }
 

@@ -4,7 +4,7 @@
 use std::ops::{Add, Sub};
 
 // Internal includes.
-use super::{Coord, IsPosition, OrdinalRotation, ProvidesPosition};
+use super::{Coord, HasPosition, IsPosition, OrdinalRotation, ProvidesPosition};
 
 /// A position on a cartesian coordinate system.
 ///
@@ -66,6 +66,16 @@ impl Add for Position {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl HasPosition for Position {
+    fn pos(&self) -> &Position {
+        self
+    }
+
+    fn pos_mut(&mut self) -> &mut Position {
+        self
     }
 }
 
