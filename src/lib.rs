@@ -40,6 +40,7 @@ mod provides_shape_position;
 mod provides_size;
 mod shape;
 mod shape_position;
+mod shape_position_range;
 mod size;
 mod size_range;
 
@@ -70,6 +71,7 @@ pub use provides_shape_position::ProvidesShapePosition;
 pub use provides_size::ProvidesSize;
 pub use shape::Shape;
 pub use shape_position::ShapePosition;
+pub use shape_position_range::ShapePositionRange;
 pub use size::Size;
 pub use size_range::SizeRange;
 
