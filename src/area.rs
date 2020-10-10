@@ -3,9 +3,7 @@
 // Standard includes.
 
 // Internal includes.
-use super::{
-    Coord, HasPosition, HasSize, IsArea, IsPosition, IsSize, Length, Position, ProvidesArea, Size,
-};
+use super::{HasPosition, HasSize, IsArea, IsSize, Length, Position, ProvidesArea, Size};
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
 ///
@@ -25,12 +23,6 @@ impl Area {
     ///
     /// assert!(*value.pos() == Position::new(5, -3));
     /// assert!(*value.size() == Size::new(42, 24));
-    ///
-    /// assert!(value.x() == 5);
-    /// assert!(value.y() == -3);
-    ///
-    /// assert!(value.width() == 42);
-    /// assert!(value.height() == 24);
     /// ```
     pub fn new(pos: Position, size: Size) -> Self {
         Self { pos, size }
@@ -59,39 +51,21 @@ impl HasSize for Area {
 
 impl IsArea for Area {}
 
-impl IsPosition for Area {
-    fn x(&self) -> Coord {
-        self.pos.x()
-    }
-
-    fn x_mut(&mut self) -> &mut Coord {
-        self.pos.x_mut()
-    }
-
-    fn y(&self) -> Coord {
-        self.pos.y()
-    }
-
-    fn y_mut(&mut self) -> &mut Coord {
-        self.pos.y_mut()
-    }
-}
-
 impl IsSize for Area {
-    fn height(&self) -> Length {
-        self.size.height()
-    }
-
-    fn height_mut(&mut self) -> &mut Length {
-        self.size.height_mut()
-    }
-
     fn width(&self) -> Length {
         self.size.width()
     }
 
     fn width_mut(&mut self) -> &mut Length {
         self.size.width_mut()
+    }
+
+    fn height(&self) -> Length {
+        self.size.height()
+    }
+
+    fn height_mut(&mut self) -> &mut Length {
+        self.size.height_mut()
     }
 }
 
