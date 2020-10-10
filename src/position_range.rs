@@ -13,7 +13,7 @@ use super::{Coord, IsPosition, Position, ProvidesPosition, ProvidesShapePosition
 /// ```
 /// # use dungen_minion_geometry::*;
 /// use rand::{thread_rng, Rng};
-/// // The end position is an exclusive bound.
+/// // The end position is an inclusive bound.
 /// // The divergent min and max for x and y guarantee that the samples are separate.
 /// let position_range = PositionRange::new(Position::new(4, 14), Position::new(13, 23));
 /// // Random generators are hard to guarantee. But this should be viable.
@@ -74,7 +74,7 @@ impl ProvidesShapePosition for PositionRange {
     /// ShapePosition generation treats the start of the PositionRange as the (0, 0) position.
     /// ```
     /// # use dungen_minion_geometry::*;
-    /// // The end position is an exclusive bound.
+    /// // The end position is an inclusive bound.
     /// // The divergent min and max for x and y guarantee that the samples are separate.
     /// let position_range = PositionRange::new(Position::new(4, 14), Position::new(13, 23));
     /// // Random generators are hard to guarantee. But this should be viable.
