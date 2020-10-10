@@ -24,7 +24,7 @@ impl Area {
     /// # use dungen_minion_geometry::*;
     /// let value: Area = Area::new(Position::new(5, -3), Size::new(42, 24));
     ///
-    /// assert!(*value.pos() == Position::new(5, -3));
+    /// assert!(*value.position() == Position::new(5, -3));
     /// assert!(*value.size() == Size::new(42, 24));
     ///
     /// assert!(value.width() == 42);
