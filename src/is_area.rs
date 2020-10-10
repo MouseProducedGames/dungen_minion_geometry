@@ -3,10 +3,10 @@
 // Standard includes.
 
 // Internal includes.
-use super::{HasArea, HasPosition, HasSize, IsSize, Length};
+use super::{HasArea, IsSize, Length};
 
 /// `IsArea` is defined as both [`HasPosition`](trait.HasPosition.html), [`HasSize`](trait.HasSize.html), and [`IsSize`](trait.IsSize.html).
-pub trait IsArea: HasArea + HasPosition + HasSize + IsSize {}
+pub trait IsArea: HasArea + IsSize {}
 
 impl<TIsArea> IsSize for TIsArea
 where
