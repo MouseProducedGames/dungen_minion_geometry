@@ -2,6 +2,7 @@
 
 // Standard includes.
 use std::convert::From;
+use std::fmt;
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
@@ -60,6 +61,18 @@ impl Add for ShapePosition {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl fmt::Display for ShapePosition {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "( x: {}, y: {} ).is_valid_shape_index() -> {}",
+            self.x(),
+            self.y(),
+            self.is_valid_shape_index()
+        )
     }
 }
 

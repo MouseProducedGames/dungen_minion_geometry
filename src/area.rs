@@ -1,6 +1,7 @@
 // External includes.
 
 // Standard includes.
+use std::fmt;
 
 // Internal includes.
 use super::{
@@ -32,6 +33,12 @@ impl Area {
     /// ```
     pub fn new(position: Position, size: Size) -> Self {
         Self { position, size }
+    }
+}
+
+impl fmt::Display for Area {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "( ( {} ), ( {} ) )", self.position, self.size)
     }
 }
 

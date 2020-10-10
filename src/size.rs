@@ -1,6 +1,7 @@
 // External includes.
 
 // Standard includes.
+use std::fmt;
 
 // Internal includes.
 use super::{HasSize, IsSize, Length, ProvidesSize};
@@ -25,6 +26,12 @@ impl Size {
     /// ```
     pub fn new(width: Length, height: Length) -> Self {
         Self { height, width }
+    }
+}
+
+impl fmt::Display for Size {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "( width: {}, height: {} )", self.width(), self.height())
     }
 }
 

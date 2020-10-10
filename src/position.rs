@@ -1,6 +1,7 @@
 // External includes.
 
 // Standard includes.
+use std::fmt;
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
@@ -41,6 +42,12 @@ impl Add for Position {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl fmt::Display for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "( x: {}, y: {} )", self.x(), self.y())
     }
 }
 
