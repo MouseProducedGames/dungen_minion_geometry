@@ -88,7 +88,7 @@ impl IsPosition for Position {
 }
 
 impl ProvidesPosition for Position {
-    fn provide_pos(&self) -> Position {
+    fn provide_position(&self) -> Position {
         *self
     }
 }
