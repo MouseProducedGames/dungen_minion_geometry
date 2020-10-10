@@ -2,7 +2,7 @@
 
 // Standard includes.
 use std::convert::From;
-use std::ops::{Add, Sub};
+use std::ops::{Add, Neg, Sub};
 
 // Internal includes.
 use super::OrdinalRotation;
@@ -73,6 +73,14 @@ impl Add<OrdinalRotation> for OrdinalDirection {
 
     fn add(self, other: OrdinalRotation) -> Self::Output {
         Self::from(i8::from(self) + i8::from(other))
+    }
+}
+
+impl Neg for OrdinalDirection {
+    type Output = OrdinalDirection;
+
+    fn neg(self) -> Self::Output {
+        OrdinalDirection::from(i8::from(self) + 2)
     }
 }
 
