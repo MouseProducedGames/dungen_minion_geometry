@@ -1,10 +1,14 @@
 // External includes.
 
 // Standard includes.
+use std::convert::From;
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
-use super::{Coord, HasShapePosition, IsShapePosition, OrdinalRotation, ProvidesShapePosition};
+use super::{
+    Coord, HasShapePosition, IsPosition, IsShapePosition, OrdinalRotation, Position,
+    ProvidesShapePosition,
+};
 
 /// A position relative to the top-left corner of a shape.
 ///
@@ -56,6 +60,21 @@ impl Add for ShapePosition {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl From<Position> for ShapePosition {
+    /// Converts a ShapePosition directly from a Position.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let position = Position::new(3, 2);
+    /// let shape_position: ShapePosition = ShapePosition::from(position);
+    /// assert!(shape_position.x() == position.x());
+    /// assert!(shape_position.y() == position.y());
+    /// ```
+    fn from(position: Position) -> Self {
+        ShapePosition::new(position.x(), position.y())
     }
 }
 

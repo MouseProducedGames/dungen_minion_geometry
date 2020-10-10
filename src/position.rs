@@ -4,7 +4,10 @@
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
-use super::{Coord, HasPosition, IsPosition, OrdinalRotation, ProvidesPosition};
+use super::{
+    Coord, HasPosition, IsPosition, IsShapePosition, OrdinalRotation, ProvidesPosition,
+    ShapePosition,
+};
 
 /// A position on a cartesian coordinate system.
 ///
@@ -38,6 +41,21 @@ impl Add for Position {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl From<ShapePosition> for Position {
+    /// Converts a Position directly from a ShapePosition.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let shape_position = ShapePosition::new(3, 2);
+    /// let position: Position = Position::from(shape_position);
+    /// assert!(position.x() == shape_position.x());
+    /// assert!(position.y() == shape_position.y());
+    /// ```
+    fn from(shape_position: ShapePosition) -> Self {
+        Position::new(shape_position.x(), shape_position.y())
     }
 }
 
