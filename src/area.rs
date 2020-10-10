@@ -13,7 +13,7 @@ use super::{
 /// As such, `Area` has an x and y [`Coord`](type.Coord.html), and a width and height [`Length`](type.Length.html). In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system.
 #[derive(Copy, Clone, Debug)]
 pub struct Area {
-    pos: Position,
+    position: Position,
     size: Size,
 }
 
@@ -30,8 +30,8 @@ impl Area {
     /// assert!(value.width() == 42);
     /// assert!(value.height() == 24);
     /// ```
-    pub fn new(pos: Position, size: Size) -> Self {
-        Self { pos, size }
+    pub fn new(position: Position, size: Size) -> Self {
+        Self { position, size }
     }
 }
 
@@ -46,12 +46,12 @@ impl HasArea for Area {
 }
 
 impl HasPosition for Area {
-    fn pos(&self) -> &Position {
-        &self.pos
+    fn position(&self) -> &Position {
+        &self.position
     }
 
-    fn pos_mut(&mut self) -> &mut Position {
-        &mut self.pos
+    fn position_mut(&mut self) -> &mut Position {
+        &mut self.position
     }
 }
 
@@ -75,7 +75,7 @@ impl ProvidesArea for Area {
 
 impl ProvidesPosition for Area {
     fn provide_position(&self) -> Position {
-        self.pos().provide_position()
+        self.position().provide_position()
     }
 }
 

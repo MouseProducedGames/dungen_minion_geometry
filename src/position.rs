@@ -70,11 +70,11 @@ impl Add for Position {
 }
 
 impl HasPosition for Position {
-    fn pos(&self) -> &Position {
+    fn position(&self) -> &Position {
         self
     }
 
-    fn pos_mut(&mut self) -> &mut Position {
+    fn position_mut(&mut self) -> &mut Position {
         self
     }
 }
