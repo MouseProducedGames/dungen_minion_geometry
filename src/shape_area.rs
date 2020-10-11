@@ -47,6 +47,13 @@ impl fmt::Display for ShapeArea {
     }
 }
 
+impl From<Size> for ShapeArea {
+    /// Creates a new `ShapeArea` from a `ShapePosition` of (0, 0) and the provided `Size`.
+    fn from(size: Size) -> Self {
+        Self::new(ShapePosition::new(0, 0), size)
+    }
+}
+
 impl HasShapeArea for ShapeArea {
     fn shape_area(&self) -> &ShapeArea {
         self
