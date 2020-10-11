@@ -6,8 +6,8 @@ use rand::{thread_rng, Rng};
 
 // Internal includes.
 use super::{
-    Area, Position, PositionRange, ProvidesArea, ProvidesPosition, ProvidesShapePosition,
-    ProvidesSize, ShapePosition, Size, SizeRange,
+    Area, HasPosition, HasSize, Position, PositionRange, ProvidesArea, ProvidesPosition,
+    ProvidesShapePosition, ProvidesSize, ShapePosition, Size, SizeRange,
 };
 
 /// Provides a range of [`Area`](struct.Area.html)s, from a minimum area to a maximum area.
@@ -63,6 +63,15 @@ impl Distribution<Area> for AreaRange {
         R: Rng,
     {
         Area::new(rng.sample(self.position_range), rng.sample(self.size_range))
+    }
+}
+
+impl From<Area> for AreaRange {
+    fn from(area: Area) -> Self {
+        AreaRange::new(
+            PositionRange::from(*area.position()),
+            SizeRange::from(*area.size()),
+        )
     }
 }
 

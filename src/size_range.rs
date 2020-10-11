@@ -55,6 +55,12 @@ impl Distribution<Size> for SizeRange {
     }
 }
 
+impl From<Size> for SizeRange {
+    fn from(size: Size) -> Self {
+        Self::new(size, size)
+    }
+}
+
 impl ProvidesSize for SizeRange {
     fn provide_size(&self) -> Size {
         self.sample(&mut thread_rng())

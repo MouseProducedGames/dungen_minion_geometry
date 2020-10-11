@@ -60,6 +60,12 @@ impl Distribution<Position> for PositionRange {
     }
 }
 
+impl From<Position> for PositionRange {
+    fn from(position: Position) -> Self {
+        Self::new(position, position)
+    }
+}
+
 impl ProvidesPosition for PositionRange {
     fn provide_position(&self) -> Position {
         self.sample(&mut thread_rng())

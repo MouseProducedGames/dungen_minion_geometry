@@ -62,6 +62,12 @@ impl Distribution<ShapePosition> for ShapePositionRange {
     }
 }
 
+impl From<ShapePosition> for ShapePositionRange {
+    fn from(shape_position: ShapePosition) -> Self {
+        Self::new(shape_position, shape_position)
+    }
+}
+
 impl ProvidesShapePosition for ShapePositionRange {
     fn provide_shape_position(&self) -> ShapePosition {
         self.sample(&mut thread_rng())

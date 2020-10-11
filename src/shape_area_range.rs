@@ -6,8 +6,8 @@ use rand::{thread_rng, Rng};
 
 // Internal includes.
 use super::{
-    ProvidesShapeArea, ProvidesShapePosition, ProvidesSize, ShapeArea, ShapePosition,
-    ShapePositionRange, Size, SizeRange,
+    HasShapePosition, HasSize, ProvidesShapeArea, ProvidesShapePosition, ProvidesSize, ShapeArea,
+    ShapePosition, ShapePositionRange, Size, SizeRange,
 };
 
 /// Provides a range of [`ShapeArea`](struct.ShapeArea.html)s, from a minimum shape area to a maximum shape area.
@@ -69,6 +69,15 @@ impl Distribution<ShapeArea> for ShapeAreaRange {
         ShapeArea::new(
             rng.sample(self.shape_position_range),
             rng.sample(self.size_range),
+        )
+    }
+}
+
+impl From<ShapeArea> for ShapeAreaRange {
+    fn from(shape_area: ShapeArea) -> Self {
+        Self::new(
+            ShapePositionRange::from(*shape_area.shape_position()),
+            SizeRange::from(*shape_area.size()),
         )
     }
 }
