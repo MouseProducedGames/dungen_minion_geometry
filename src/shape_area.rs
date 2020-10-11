@@ -21,13 +21,13 @@ pub struct ShapeArea {
 }
 
 impl ShapeArea {
-    /// Creates a new `Area` with the given [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
+    /// Creates a new `ShapeArea` with the given [`ShapePosition`](struct.ShapePosition.html) and [`Size`](struct.Size.html).
     ///
     /// ```
     /// # use dungen_minion_geometry::*;
-    /// let value: Area = Area::new(Position::new(5, -3), Size::new(42, 24));
+    /// let value: ShapeArea = ShapeArea::new(ShapePosition::new(5, -3), Size::new(42, 24));
     ///
-    /// assert!(*value.position() == Position::new(5, -3));
+    /// assert!(*value.shape_position() == ShapePosition::new(5, -3));
     /// assert!(*value.size() == Size::new(42, 24));
     ///
     /// assert!(value.width() == 42);
