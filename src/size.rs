@@ -4,7 +4,7 @@
 use std::fmt;
 
 // Internal includes.
-use super::{HasSize, IsSize, Length, ProvidesSize};
+use super::{HasSize, IsSize, Length, ProvidesShapeArea, ProvidesSize, ShapeArea};
 
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
 ///
@@ -60,6 +60,12 @@ impl IsSize for Size {
 
     fn width_mut(&mut self) -> &mut Length {
         &mut self.width
+    }
+}
+
+impl ProvidesShapeArea for Size {
+    fn provide_shape_area(&self) -> ShapeArea {
+        ShapeArea::from(*self)
     }
 }
 
