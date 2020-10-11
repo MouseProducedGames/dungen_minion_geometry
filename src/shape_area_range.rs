@@ -82,6 +82,15 @@ impl From<ShapeArea> for ShapeAreaRange {
     }
 }
 
+impl From<SizeRange> for ShapeAreaRange {
+    fn from(size_range: SizeRange) -> Self {
+        Self::new(
+            ShapePositionRange::from(ShapePosition::new(0, 0)),
+            size_range,
+        )
+    }
+}
+
 impl From<Size> for ShapeAreaRange {
     fn from(size: Size) -> Self {
         Self::new(
