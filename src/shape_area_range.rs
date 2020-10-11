@@ -82,6 +82,15 @@ impl From<ShapeArea> for ShapeAreaRange {
     }
 }
 
+impl From<Size> for ShapeAreaRange {
+    fn from(size: Size) -> Self {
+        Self::new(
+            ShapePositionRange::from(ShapePosition::new(0, 0)),
+            SizeRange::from(size),
+        )
+    }
+}
+
 impl ProvidesShapeArea for ShapeAreaRange {
     fn provide_shape_area(&self) -> ShapeArea {
         self.sample(&mut thread_rng())
