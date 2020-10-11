@@ -5,7 +5,10 @@ use rand::{thread_rng, Rng};
 // Standard includes.
 
 // Internal includes.
-use super::{Coord, IsSize, ProvidesShapePosition, ProvidesSize, ShapePosition, Size};
+use super::{
+    Coord, IsSize, ProvidesShapeArea, ProvidesShapePosition, ProvidesSize, ShapeArea,
+    ShapePosition, Size,
+};
 
 /// Provides a range of [`Size`](struct.Size.html)s, from a minimum size to a maximum size.
 ///
@@ -64,6 +67,12 @@ impl From<Size> for SizeRange {
 impl ProvidesSize for SizeRange {
     fn provide_size(&self) -> Size {
         self.sample(&mut thread_rng())
+    }
+}
+
+impl ProvidesShapeArea for SizeRange {
+    fn provide_shape_area(&self) -> ShapeArea {
+        ShapeArea::from(self.provide_size())
     }
 }
 
