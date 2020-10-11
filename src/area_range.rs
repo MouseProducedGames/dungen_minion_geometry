@@ -48,7 +48,7 @@ pub struct AreaRange {
 }
 
 impl AreaRange {
-    /// Creates a new `SizeRange` from a minimum `Size` and a maximum `Size`.
+    /// Creates a new `AreaRange` from a `PositionRange` and `SizeRange`.
     pub fn new(position_range: PositionRange, size_range: SizeRange) -> Self {
         Self {
             position_range,
