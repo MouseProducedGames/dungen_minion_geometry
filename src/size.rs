@@ -27,6 +27,14 @@ impl Size {
     pub fn new(width: Length, height: Length) -> Self {
         Self { height, width }
     }
+
+    /// Returns a size of (0, 0).
+    pub fn zero() -> Self {
+        Self {
+            height: 0,
+            width: 0,
+        }
+    }
 }
 
 impl fmt::Display for Size {
