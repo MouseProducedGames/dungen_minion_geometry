@@ -5,10 +5,7 @@ use rand::{thread_rng, Rng};
 // Standard includes.
 
 // Internal includes.
-use super::{
-    Coord, IsSize, ProvidesShapeArea, ProvidesShapePosition, ProvidesSize, ShapeArea,
-    ShapePosition, Size,
-};
+use super::{Area, Coord, IsSize, ProvidesArea, ProvidesSize, Size};
 
 /// Provides a range of [`Size`](struct.Size.html)s, from a minimum size to a maximum size.
 ///
@@ -70,31 +67,8 @@ impl ProvidesSize for SizeRange {
     }
 }
 
-impl ProvidesShapeArea for SizeRange {
-    fn provide_shape_area(&self) -> ShapeArea {
-        ShapeArea::from(self.provide_size())
-    }
-}
-
-impl ProvidesShapePosition for SizeRange {
-    /// Provides a range of [`ShapePosition`](struct.ShapePosition.html)s, from a minimum size to a maximum size.
-    ///
-    /// Both of these methods provide a random shape position between the minimum size in the range, and the maximum size in the range. The x- and y-component of the returned `ShapePosition` are bounded separately.
-    /// ```
-    /// # use dungen_minion_geometry::*;
-    /// use rand::{thread_rng, Rng};
-    /// // The maximum size is an inclusive bound on the returned shape position.
-    /// // The divergent min and max for width and height guarantee that the samples are separate.
-    /// let size_range = SizeRange::new(Size::new(4, 14), Size::new(13, 23));
-    /// // Random generators are hard to guarantee. But this should be viable.
-    /// for _ in 0..5_000 {
-    ///     let shape_position = size_range.provide_shape_position();
-    ///     assert!(shape_position.x() >= 4 && shape_position.x() <= 13);
-    ///     assert!(shape_position.y() >= 14 && shape_position.y() <= 23);
-    /// }
-    /// ```
-    fn provide_shape_position(&self) -> ShapePosition {
-        let size = self.provide_size();
-        ShapePosition::new(size.width() as Coord, size.height() as Coord)
+impl ProvidesArea for SizeRange {
+    fn provide_area(&self) -> Area {
+        Area::from(self.provide_size())
     }
 }

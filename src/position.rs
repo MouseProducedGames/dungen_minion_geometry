@@ -5,10 +5,7 @@ use std::fmt;
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
-use super::{
-    Coord, HasPosition, IsPosition, IsShapePosition, OrdinalDirection, OrdinalRotation,
-    ProvidesPosition, ShapePosition,
-};
+use super::{Coord, HasPosition, IsPosition, OrdinalDirection, OrdinalRotation, ProvidesPosition};
 
 /// A position on a cartesian coordinate system.
 ///
@@ -31,6 +28,11 @@ impl Position {
     /// ```
     pub fn new(x: Coord, y: Coord) -> Self {
         Self { x, y }
+    }
+
+    /// Returns a `Position` of (0, 0).
+    pub fn zero() -> Self {
+        Self { x: 0, y: 0 }
     }
 }
 
@@ -68,21 +70,6 @@ impl From<OrdinalDirection> for Position {
             OrdinalDirection::South => Position::new(0, 1),
             OrdinalDirection::West => Position::new(-1, 0),
         }
-    }
-}
-
-impl From<ShapePosition> for Position {
-    /// Converts a `Position` directly from a `ShapePosition`.
-    ///
-    /// ```
-    /// # use dungen_minion_geometry::*;
-    /// let shape_position = ShapePosition::new(3, 2);
-    /// let position: Position = Position::from(shape_position);
-    /// assert!(position.x() == shape_position.x());
-    /// assert!(position.y() == shape_position.y());
-    /// ```
-    fn from(shape_position: ShapePosition) -> Self {
-        Position::new(shape_position.x(), shape_position.y())
     }
 }
 

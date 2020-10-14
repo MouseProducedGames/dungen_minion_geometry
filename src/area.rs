@@ -42,6 +42,12 @@ impl fmt::Display for Area {
     }
 }
 
+impl From<Size> for Area {
+    fn from(size: Size) -> Area {
+        Area::new(Position::zero(), size)
+    }
+}
+
 impl HasArea for Area {
     fn area(&self) -> &Area {
         self
