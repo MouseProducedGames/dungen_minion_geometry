@@ -5,7 +5,7 @@ use rand::{thread_rng, Rng};
 // Standard includes.
 
 // Internal includes.
-use super::{Area, Coord, IsSize, ProvidesArea, ProvidesSize, Size};
+use super::{Area, IsSize, ProvidesArea, ProvidesSize, Size};
 
 /// Provides a range of [`Size`](struct.Size.html)s, from a minimum size to a maximum size.
 ///
