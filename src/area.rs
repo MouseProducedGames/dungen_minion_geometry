@@ -110,7 +110,7 @@ impl ProvidesPosition for Area {
         self.position
             + Position::new(
                 thread_rng().gen_range(0, self.size().width() - 1) as i32,
-                thread_rng().gen_range(0, self.size().width() - 1) as i32,
+                thread_rng().gen_range(0, self.size().height() - 1) as i32,
             )
     }
 }
