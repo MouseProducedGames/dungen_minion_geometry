@@ -10,22 +10,22 @@ use std::ops::{Add, Neg, Sub};
 ///
 /// ```
 /// # use dungen_minion_geometry::*;
-/// let rotation_none: OrdinalRotation = OrdinalRotation::None;
+/// let rotation_none: CardinalRotation = CardinalRotation::None;
 ///
-/// let rotation_right90: OrdinalRotation = rotation_none + OrdinalRotation::Right90;
-/// assert!(rotation_right90 == OrdinalRotation::Right90);
+/// let rotation_right90: CardinalRotation = rotation_none + CardinalRotation::Right90;
+/// assert!(rotation_right90 == CardinalRotation::Right90);
 ///
-/// let rotation_full180: OrdinalRotation = rotation_right90 + OrdinalRotation::Right90;
-/// assert!(rotation_full180 == OrdinalRotation::Full180);
+/// let rotation_full180: CardinalRotation = rotation_right90 + CardinalRotation::Right90;
+/// assert!(rotation_full180 == CardinalRotation::Full180);
 ///
-/// let rotation_left90: OrdinalRotation = rotation_full180 + OrdinalRotation::Right90;
-/// assert!(rotation_left90 == OrdinalRotation::Left90);
+/// let rotation_left90: CardinalRotation = rotation_full180 + CardinalRotation::Right90;
+/// assert!(rotation_left90 == CardinalRotation::Left90);
 ///
-/// let rotation_back_to_none: OrdinalRotation = rotation_left90 + OrdinalRotation::Right90;
-/// assert!(rotation_back_to_none== OrdinalRotation::None);
+/// let rotation_back_to_none: CardinalRotation = rotation_left90 + CardinalRotation::Right90;
+/// assert!(rotation_back_to_none== CardinalRotation::None);
 /// ```
 #[derive(Copy, Clone, Debug, Display, Eq, Hash, PartialEq)]
-pub enum OrdinalRotation {
+pub enum CardinalRotation {
     /// No rotation; provided for the sake of completness.
     None,
     /// Rotate 90 degrees to the right on a 2D cartesian plane.
@@ -36,7 +36,7 @@ pub enum OrdinalRotation {
     Left90,
 }
 
-impl From<i8> for OrdinalRotation {
+impl From<i8> for CardinalRotation {
     fn from(value: i8) -> Self {
         let mut value = value % 4;
         if value < 0 {
@@ -44,46 +44,46 @@ impl From<i8> for OrdinalRotation {
         }
 
         match value {
-            0 => OrdinalRotation::None,
-            1 => OrdinalRotation::Right90,
-            2 => OrdinalRotation::Full180,
-            3 => OrdinalRotation::Left90,
+            0 => CardinalRotation::None,
+            1 => CardinalRotation::Right90,
+            2 => CardinalRotation::Full180,
+            3 => CardinalRotation::Left90,
             _ => panic!("Wrapping and if-check should not allow this: {}", value),
         }
     }
 }
 
-impl From<OrdinalRotation> for i8 {
-    fn from(value: OrdinalRotation) -> i8 {
+impl From<CardinalRotation> for i8 {
+    fn from(value: CardinalRotation) -> i8 {
         match value {
-            OrdinalRotation::None => 0,
-            OrdinalRotation::Right90 => 1,
-            OrdinalRotation::Full180 => 2,
-            OrdinalRotation::Left90 => 3,
+            CardinalRotation::None => 0,
+            CardinalRotation::Right90 => 1,
+            CardinalRotation::Full180 => 2,
+            CardinalRotation::Left90 => 3,
         }
     }
 }
 
-impl Add<OrdinalRotation> for OrdinalRotation {
-    type Output = OrdinalRotation;
+impl Add<CardinalRotation> for CardinalRotation {
+    type Output = CardinalRotation;
 
-    fn add(self, other: OrdinalRotation) -> Self::Output {
+    fn add(self, other: CardinalRotation) -> Self::Output {
         Self::from(i8::from(self) + i8::from(other))
     }
 }
 
-impl Neg for OrdinalRotation {
-    type Output = OrdinalRotation;
+impl Neg for CardinalRotation {
+    type Output = CardinalRotation;
 
     fn neg(self) -> Self::Output {
-        OrdinalRotation::from(i8::from(self) + 2)
+        CardinalRotation::from(i8::from(self) + 2)
     }
 }
 
-impl Sub<OrdinalRotation> for OrdinalRotation {
-    type Output = OrdinalRotation;
+impl Sub<CardinalRotation> for CardinalRotation {
+    type Output = CardinalRotation;
 
-    fn sub(self, other: OrdinalRotation) -> Self::Output {
+    fn sub(self, other: CardinalRotation) -> Self::Output {
         Self::from(i8::from(self) - i8::from(other))
     }
 }

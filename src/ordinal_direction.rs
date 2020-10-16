@@ -5,31 +5,31 @@ use std::convert::From;
 use std::ops::{Add, Neg, Sub};
 
 // Internal includes.
-use super::OrdinalRotation;
+use super::CardinalRotation;
 
-/// Defines a direction on a cartesian plane where each direction is an orthogonal 90-degree vector.
+/// Defines a direction on a cartesian plane where each direction is an orthogonal, and cardinal, 90-degree vector.
 ///
 /// ```
 /// # use dungen_minion_geometry::*;
-/// let north: OrdinalDirection = OrdinalDirection::North;
-/// let east: OrdinalDirection = OrdinalDirection::East;
-/// let south: OrdinalDirection = OrdinalDirection::South;
-/// let west: OrdinalDirection = OrdinalDirection::West;
+/// let north: CardinalDirection = CardinalDirection::North;
+/// let east: CardinalDirection = CardinalDirection::East;
+/// let south: CardinalDirection = CardinalDirection::South;
+/// let west: CardinalDirection = CardinalDirection::West;
 ///
 /// // Moving from north to east is a 90-degree rotation to the right.
-/// assert!((east - north) == OrdinalRotation::Right90);
+/// assert!((east - north) == CardinalRotation::Right90);
 ///
 /// // Moving from north to south is a full 180-degree rotation.
-/// assert!((south - north) == OrdinalRotation::Full180);
+/// assert!((south - north) == CardinalRotation::Full180);
 ///
 /// // Moving from north to west is a 90-degree rotation to the left.
-/// assert!((west - north) == OrdinalRotation::Left90);
+/// assert!((west - north) == CardinalRotation::Left90);
 ///
 /// // Moving from north to north is defined as not a rotation, even if you rotated to get there.
-/// assert!((north - north) == OrdinalRotation::None);
+/// assert!((north - north) == CardinalRotation::None);
 /// ```
 #[derive(Copy, Clone, Debug, Display, Eq, Hash, PartialEq)]
-pub enum OrdinalDirection {
+pub enum CardinalDirection {
     /// Represents a cartesian (0, +1) direction.
     North,
     /// Represents a cartesian (+1, 0) direction.
@@ -40,7 +40,7 @@ pub enum OrdinalDirection {
     West,
 }
 
-impl From<i8> for OrdinalDirection {
+impl From<i8> for CardinalDirection {
     fn from(value: i8) -> Self {
         let mut value = value % 4;
         if value < 0 {
@@ -48,46 +48,46 @@ impl From<i8> for OrdinalDirection {
         }
 
         match value {
-            0 => OrdinalDirection::North,
-            1 => OrdinalDirection::East,
-            2 => OrdinalDirection::South,
-            3 => OrdinalDirection::West,
+            0 => CardinalDirection::North,
+            1 => CardinalDirection::East,
+            2 => CardinalDirection::South,
+            3 => CardinalDirection::West,
             _ => panic!("Wrapping and if-check should not allow this: {}", value),
         }
     }
 }
 
-impl From<OrdinalDirection> for i8 {
-    fn from(value: OrdinalDirection) -> i8 {
+impl From<CardinalDirection> for i8 {
+    fn from(value: CardinalDirection) -> i8 {
         match value {
-            OrdinalDirection::North => 0,
-            OrdinalDirection::East => 1,
-            OrdinalDirection::South => 2,
-            OrdinalDirection::West => 3,
+            CardinalDirection::North => 0,
+            CardinalDirection::East => 1,
+            CardinalDirection::South => 2,
+            CardinalDirection::West => 3,
         }
     }
 }
 
-impl Add<OrdinalRotation> for OrdinalDirection {
-    type Output = OrdinalDirection;
+impl Add<CardinalRotation> for CardinalDirection {
+    type Output = CardinalDirection;
 
-    fn add(self, other: OrdinalRotation) -> Self::Output {
+    fn add(self, other: CardinalRotation) -> Self::Output {
         Self::from(i8::from(self) + i8::from(other))
     }
 }
 
-impl Neg for OrdinalDirection {
-    type Output = OrdinalDirection;
+impl Neg for CardinalDirection {
+    type Output = CardinalDirection;
 
     fn neg(self) -> Self::Output {
-        OrdinalDirection::from(i8::from(self) + 2)
+        CardinalDirection::from(i8::from(self) + 2)
     }
 }
 
-impl Sub<OrdinalDirection> for OrdinalDirection {
-    type Output = OrdinalRotation;
+impl Sub<CardinalDirection> for CardinalDirection {
+    type Output = CardinalRotation;
 
-    fn sub(self, other: OrdinalDirection) -> Self::Output {
-        OrdinalRotation::from(i8::from(self) - i8::from(other))
+    fn sub(self, other: CardinalDirection) -> Self::Output {
+        CardinalRotation::from(i8::from(self) - i8::from(other))
     }
 }

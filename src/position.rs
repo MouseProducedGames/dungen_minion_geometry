@@ -5,7 +5,9 @@ use std::fmt;
 use std::ops::{Add, Mul, Sub};
 
 // Internal includes.
-use super::{Coord, HasPosition, IsPosition, OrdinalDirection, OrdinalRotation, ProvidesPosition};
+use super::{
+    CardinalDirection, CardinalRotation, Coord, HasPosition, IsPosition, ProvidesPosition,
+};
 
 /// A position on a cartesian coordinate system.
 ///
@@ -53,22 +55,22 @@ impl fmt::Display for Position {
     }
 }
 
-impl From<OrdinalDirection> for Position {
-    /// Converts a `Position` from an `OrdinalDirection`.
+impl From<CardinalDirection> for Position {
+    /// Converts a `Position` from an `CardinalDirection`.
     ///
     /// ```
     /// # use dungen_minion_geometry::*;
-    /// assert!(Position::from(OrdinalDirection::North) == Position::new(0, -1));
-    /// assert!(Position::from(OrdinalDirection::East) == Position::new(1, 0));
-    /// assert!(Position::from(OrdinalDirection::South) == Position::new(0, 1));
-    /// assert!(Position::from(OrdinalDirection::West) == Position::new(-1, 0));
+    /// assert!(Position::from(CardinalDirection::North) == Position::new(0, -1));
+    /// assert!(Position::from(CardinalDirection::East) == Position::new(1, 0));
+    /// assert!(Position::from(CardinalDirection::South) == Position::new(0, 1));
+    /// assert!(Position::from(CardinalDirection::West) == Position::new(-1, 0));
     /// ```
-    fn from(ordinal_direction: OrdinalDirection) -> Self {
+    fn from(ordinal_direction: CardinalDirection) -> Self {
         match ordinal_direction {
-            OrdinalDirection::North => Position::new(0, -1),
-            OrdinalDirection::East => Position::new(1, 0),
-            OrdinalDirection::South => Position::new(0, 1),
-            OrdinalDirection::West => Position::new(-1, 0),
+            CardinalDirection::North => Position::new(0, -1),
+            CardinalDirection::East => Position::new(1, 0),
+            CardinalDirection::South => Position::new(0, 1),
+            CardinalDirection::West => Position::new(-1, 0),
         }
     }
 }
@@ -101,10 +103,10 @@ impl IsPosition for Position {
     }
 }
 
-impl Mul<OrdinalRotation> for Position {
+impl Mul<CardinalRotation> for Position {
     type Output = Self;
 
-    /// Returns a copy of `self` after an [`OrdinalRotation`](enum.OrdinalRotation.html).
+    /// Returns a copy of `self` after an [`CardinalRotation`](enum.CardinalRotation.html).
     ///
     /// ```
     /// # use dungen_minion_geometry::*;
@@ -113,22 +115,22 @@ impl Mul<OrdinalRotation> for Position {
     /// let south_raw: Position = Position::new(0, -1);
     /// let west_raw: Position = Position::new(-1, 0);
     ///
-    /// let north_from_north_raw: Position = north_raw * OrdinalRotation::None;
-    /// let east_from_north_raw: Position = north_raw * OrdinalRotation::Right90;
-    /// let south_from_north_raw: Position = north_raw * OrdinalRotation::Full180;
-    /// let west_from_north_raw: Position = north_raw * OrdinalRotation::Left90;
+    /// let north_from_north_raw: Position = north_raw * CardinalRotation::None;
+    /// let east_from_north_raw: Position = north_raw * CardinalRotation::Right90;
+    /// let south_from_north_raw: Position = north_raw * CardinalRotation::Full180;
+    /// let west_from_north_raw: Position = north_raw * CardinalRotation::Left90;
     ///
     /// assert!(north_from_north_raw == north_raw);
     /// assert!(east_from_north_raw == east_raw);
     /// assert!(south_from_north_raw == south_raw);
     /// assert!(west_from_north_raw == west_raw);
     /// ```
-    fn mul(self, rotation: OrdinalRotation) -> Self::Output {
+    fn mul(self, rotation: CardinalRotation) -> Self::Output {
         match rotation {
-            OrdinalRotation::None => self,
-            OrdinalRotation::Right90 => Self::new(self.y(), -self.x()),
-            OrdinalRotation::Full180 => Self::new(-self.x(), -self.y()),
-            OrdinalRotation::Left90 => Self::new(-self.y(), self.x()),
+            CardinalRotation::None => self,
+            CardinalRotation::Right90 => Self::new(self.y(), -self.x()),
+            CardinalRotation::Full180 => Self::new(-self.x(), -self.y()),
+            CardinalRotation::Left90 => Self::new(-self.y(), self.x()),
         }
     }
 }
