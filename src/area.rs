@@ -1,4 +1,5 @@
 // External includes.
+use rand::{thread_rng, Rng};
 
 // Standard includes.
 use std::fmt;
@@ -106,7 +107,11 @@ impl ProvidesArea for Area {
 
 impl ProvidesPosition for Area {
     fn provide_position(&self) -> Position {
-        self.position().provide_position()
+        self.position
+            + Position::new(
+                thread_rng().gen_range(0, self.size().width() - 1) as i32,
+                thread_rng().gen_range(0, self.size().width() - 1) as i32,
+            )
     }
 }
 
