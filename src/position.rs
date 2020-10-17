@@ -2,7 +2,7 @@
 
 // Standard includes.
 use std::fmt;
-use std::ops::{Add, Mul, Sub};
+use std::ops::{Add, Mul, Neg, Sub};
 
 // Internal includes.
 use super::{
@@ -132,6 +132,14 @@ impl Mul<CardinalRotation> for Position {
             CardinalRotation::Full180 => Self::new(-self.x(), -self.y()),
             CardinalRotation::Left90 => Self::new(-self.y(), self.x()),
         }
+    }
+}
+
+impl Neg for Position {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self::new(-self.x(), -self.y())
     }
 }
 
