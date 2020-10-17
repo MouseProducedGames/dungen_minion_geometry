@@ -44,7 +44,7 @@ impl From<i8> for CardinalDirection {
     fn from(value: i8) -> Self {
         let mut value = value % 4;
         if value < 0 {
-            value += value;
+            value = 4 - value.abs();
         }
 
         match value {
