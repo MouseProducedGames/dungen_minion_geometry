@@ -33,6 +33,11 @@ impl Position {
     }
 
     /// Returns a `Position` of (0, 0).
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::Position;
+    /// assert!(Position::new(0, 0) == Position::zero());
+    /// ```
     pub fn zero() -> Self {
         Self { x: 0, y: 0 }
     }
