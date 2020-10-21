@@ -12,7 +12,7 @@ use super::{
 /// A position on a cartesian coordinate system.
 ///
 /// The x and y components of `Position` can be each be an integer negative, zero, or positive value. In the cartesian system used in dungen_minion, and most roguelikes, (x: 0, y: 0) defines the top-left of the coordinate system.
-#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
+#[derive(AddAssign, Copy, Clone, Debug, Eq, Hash, PartialEq, SubAssign)]
 pub struct Position {
     x: Coord,
     y: Coord,
