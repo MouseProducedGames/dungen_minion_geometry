@@ -6,7 +6,7 @@
 use super::{Position, Shape};
 
 /// Defines an intersection operation between this instance and a [`Shape`](trait.Shape.html) at a specific [`Position`](struct.Position.html).
-pub trait IntersectsLocal<TOtherShape>
+pub trait IntersectsShape<TOtherShape>
 where
     TOtherShape: Shape,
 {
