@@ -6,8 +6,9 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    HasArea, HasPosition, HasSize, IntersectsPosition, IsArea, IsPosition, IsSize, Length, Placed,
-    PlacedObject, Position, ProvidesArea, ProvidesPosition, ProvidesSize, Shape, Size,
+    HasArea, HasPosition, HasSize, IntersectsLocalPosition, IntersectsPosition, IsArea, IsPosition,
+    IsSize, Length, Placed, PlacedObject, Position, ProvidesArea, ProvidesPosition, ProvidesSize,
+    Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -76,6 +77,15 @@ impl HasSize for Area {
 
     fn size_mut(&mut self) -> &mut Size {
         &mut self.size
+    }
+}
+
+impl IntersectsLocalPosition for Area {
+    fn intersects_local_position(&self, position: Position) -> bool {
+        !(position.x() < 0
+            || position.y() < 0
+            || position.x() as u32 >= self.width()
+            || position.y() as u32 >= self.height())
     }
 }
 
