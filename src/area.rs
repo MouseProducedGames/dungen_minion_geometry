@@ -6,9 +6,9 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    HasArea, HasPosition, HasSize, IntersectsLocalPosition, IntersectsPosition, IsArea, IsPosition,
-    IsSize, Length, Placed, PlacedObject, Position, ProvidesArea, ProvidesPosition, ProvidesSize,
-    Shape, Size,
+    Containment, ContainsLocalPosition, HasArea, HasPosition, HasSize, IntersectsLocalPosition,
+    IntersectsPosition, IsArea, IsPosition, IsSize, Length, Placed, PlacedObject, Position,
+    ProvidesArea, ProvidesPosition, ProvidesSize, Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -35,6 +35,29 @@ impl Area {
     /// ```
     pub fn new(position: Position, size: Size) -> Self {
         Self { position, size }
+    }
+}
+
+impl ContainsLocalPosition for Area {
+    fn contains_local_position(&self, position: Position) -> Containment {
+        if position.x() < self.left()
+            || position.y() < self.top()
+            || position.x() > self.right()
+            || position.y() > self.bottom()
+        {
+            // It's entirely outside.
+            Containment::Disjoint
+        } else if position.x() > self.left()
+            && position.y() > self.top()
+            && position.x() < self.right()
+            && position.y() < self.bottom()
+        {
+            // It's entirely inside.
+            Containment::Contains
+        } else {
+            // If it's neither entirely outside nor entirely inside, it intersects.
+            Containment::Intersects
+        }
     }
 }
 
@@ -89,14 +112,7 @@ impl IntersectsLocalPosition for Area {
     }
 }
 
-impl IntersectsPosition for Area {
-    fn intersects_position(&self, position: Position) -> bool {
-        !(position.x() < self.position.x()
-            || position.y() < self.position.y()
-            || position.x() > self.right()
-            || position.y() > self.bottom())
-    }
-}
+impl IntersectsPosition for Area {}
 
 impl IsArea for Area {}
 
