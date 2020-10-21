@@ -5,7 +5,7 @@ use std::convert::From;
 use std::ops::{Add, AddAssign, Neg, Sub};
 
 // Internal includes.
-use super::CardinalRotation;
+use super::{CardinalRotation, IsPosition, Position};
 
 /// Defines a direction on a cartesian plane where each direction is an orthogonal, and cardinal, 90-degree vector.
 ///
@@ -78,6 +78,30 @@ impl From<CardinalDirection> for i8 {
             CardinalDirection::East => 1,
             CardinalDirection::South => 2,
             CardinalDirection::West => 3,
+        }
+    }
+}
+
+impl From<Position> for Option<CardinalDirection> {
+    fn from(value: Position) -> Self {
+        let index = match value.x().signum() {
+            -1 => 1,
+            1 => 2,
+            // The only other possibility is zero, but Rust doesn't know that (21-10-2020 DD-MM-YYYY).
+            _ => 0,
+        } + match value.y().signum() {
+            -1 => 4,
+            1 => 8,
+            // The only other possibility is zero, but Rust doesn't know that (21-10-2020 DD-MM-YYYY).
+            _ => 0,
+        };
+
+        match index {
+            1 => Some(CardinalDirection::West),
+            2 => Some(CardinalDirection::East),
+            4 => Some(CardinalDirection::North),
+            8 => Some(CardinalDirection::South),
+            _ => None,
         }
     }
 }
