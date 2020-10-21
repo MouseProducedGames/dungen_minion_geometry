@@ -97,23 +97,12 @@ impl From<Position> for Option<CardinalDirection> {
     /// assert!(None == Option::<CardinalDirection>::from(Position::new(-1, -1)));
     /// ```
     fn from(value: Position) -> Self {
-        let index = match value.x().signum() {
-            -1 => 1,
-            1 => 2,
-            // The only other possibility is zero, but Rust doesn't know that (21-10-2020 DD-MM-YYYY).
-            _ => 0,
-        } + match value.y().signum() {
-            -1 => 4,
-            1 => 8,
-            // The only other possibility is zero, but Rust doesn't know that (21-10-2020 DD-MM-YYYY).
-            _ => 0,
-        };
-
-        match index {
-            1 => Some(CardinalDirection::West),
-            2 => Some(CardinalDirection::East),
-            4 => Some(CardinalDirection::North),
-            8 => Some(CardinalDirection::South),
+        let test_value = Position::new(value.x().signum(), value.y().signum());
+        match test_value {
+            Position::NORTH => Some(CardinalDirection::North),
+            Position::EAST => Some(CardinalDirection::East),
+            Position::SOUTH => Some(CardinalDirection::South),
+            Position::WEST => Some(CardinalDirection::West),
             _ => None,
         }
     }
