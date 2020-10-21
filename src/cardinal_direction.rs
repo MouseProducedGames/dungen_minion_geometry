@@ -2,7 +2,7 @@
 
 // Standard includes.
 use std::convert::From;
-use std::ops::{Add, Neg, Sub};
+use std::ops::{Add, AddAssign, Neg, Sub};
 
 // Internal includes.
 use super::CardinalRotation;
@@ -73,6 +73,12 @@ impl Add<CardinalRotation> for CardinalDirection {
 
     fn add(self, other: CardinalRotation) -> Self::Output {
         Self::from(i8::from(self) + i8::from(other))
+    }
+}
+
+impl AddAssign<CardinalRotation> for CardinalDirection {
+    fn add_assign(&mut self, other: CardinalRotation) {
+        *self = *self + other
     }
 }
 
