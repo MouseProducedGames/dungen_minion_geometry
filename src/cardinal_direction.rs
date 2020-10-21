@@ -83,6 +83,19 @@ impl From<CardinalDirection> for i8 {
 }
 
 impl From<Position> for Option<CardinalDirection> {
+    /// Attempts to convert from a position offset to a CardinalDirection.
+    ///
+    /// ```
+    /// use dungen_minion_geometry::*;
+    /// assert!(Some(CardinalDirection::North) == Option::<CardinalDirection>::from(Position::new(0, -1)));
+    /// assert!(None == Option::<CardinalDirection>::from(Position::new(1, -1)));
+    /// assert!(Some(CardinalDirection::East) == Option::<CardinalDirection>::from(Position::new(1, 0)));
+    /// assert!(None == Option::<CardinalDirection>::from(Position::new(1, 1)));
+    /// assert!(Some(CardinalDirection::South) == Option::<CardinalDirection>::from(Position::new(0, 1)));
+    /// assert!(None == Option::<CardinalDirection>::from(Position::new(-1, 1)));
+    /// assert!(Some(CardinalDirection::West) == Option::<CardinalDirection>::from(Position::new(-1, 0)));
+    /// assert!(None == Option::<CardinalDirection>::from(Position::new(-1, -1)));
+    /// ```
     fn from(value: Position) -> Self {
         let index = match value.x().signum() {
             -1 => 1,
