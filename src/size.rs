@@ -2,9 +2,10 @@
 
 // Standard includes.
 use std::fmt;
+use std::ops::Mul;
 
 // Internal includes.
-use super::{Area, HasSize, IsSize, Length, ProvidesArea, ProvidesSize};
+use super::{Area, CardinalRotation, HasSize, IsSize, Length, ProvidesArea, ProvidesSize};
 
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
 ///
@@ -68,6 +69,38 @@ impl IsSize for Size {
 
     fn width_mut(&mut self) -> &mut Length {
         &mut self.width
+    }
+}
+
+impl Mul<CardinalRotation> for Size {
+    type Output = Self;
+
+    /// Returns a copy of `self` after an [`CardinalRotation`](enum.CardinalRotation.html).
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::*;
+    /// let none_raw: Size = Size::new(8, 6);
+    /// let right90_raw: Size = Size::new(6, 8);
+    /// let full180_raw: Size = Size::new(8, 6);
+    /// let left90_raw: Size = Size::new(6, 8);
+    ///
+    /// let none_from_none_raw: Size = none_raw * CardinalRotation::None;
+    /// let right90_from_none_raw: Size = none_raw * CardinalRotation::Right90;
+    /// let full180_from_none_raw: Size = none_raw * CardinalRotation::Full180;
+    /// let left90_from_none_raw: Size = none_raw * CardinalRotation::Left90;
+    ///
+    /// assert!(none_from_none_raw == none_raw);
+    /// assert!(right90_from_none_raw == right90_raw);
+    /// assert!(full180_from_none_raw == full180_raw);
+    /// assert!(left90_from_none_raw == left90_raw);
+    /// ```
+    fn mul(self, rotation: CardinalRotation) -> Self::Output {
+        match rotation {
+            CardinalRotation::None => self,
+            CardinalRotation::Right90 => Self::new(self.height(), self.width()),
+            CardinalRotation::Full180 => self,
+            CardinalRotation::Left90 => Self::new(self.height(), self.width()),
+        }
     }
 }
 
