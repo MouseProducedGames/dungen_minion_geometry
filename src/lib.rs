@@ -50,7 +50,7 @@ pub use defines::{Coord, Count, Length};
 pub use has_area::HasArea;
 pub use has_position::HasPosition;
 pub use has_size::HasSize;
-pub use intersects::Intersects;
+pub use intersects::IntersectsPlacedShape;
 pub use intersects_pos::IntersectsPos;
 pub use intersects_shape::IntersectsShape;
 pub use is_area::IsArea;

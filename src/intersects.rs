@@ -6,7 +6,7 @@
 use super::PlacedShape;
 
 /// Defines an intersection operation between this instance and a [`PlacedShape`](trait.PlacedShape.html).
-pub trait Intersects<TOtherPlacedShape>
+pub trait IntersectsPlacedShape<TOtherPlacedShape>
 where
     TOtherPlacedShape: PlacedShape,
 {
