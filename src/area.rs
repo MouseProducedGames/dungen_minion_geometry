@@ -6,8 +6,8 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    HasArea, HasPosition, HasSize, IsArea, IsSize, Length, Position, ProvidesArea,
-    ProvidesPosition, ProvidesSize, Size,
+    HasArea, HasPosition, HasSize, IntersectsPos, IsArea, IsPosition, IsSize, Length, Placed,
+    PlacedObject, Position, ProvidesArea, ProvidesPosition, ProvidesSize, Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -79,6 +79,15 @@ impl HasSize for Area {
     }
 }
 
+impl IntersectsPos for Area {
+    fn intersects_pos(&self, pos: Position) -> bool {
+        !(pos.x() < self.position.x()
+            || pos.y() < self.position.y()
+            || pos.x() > self.right()
+            || pos.y() > self.bottom())
+    }
+}
+
 impl IsArea for Area {}
 
 impl IsSize for Area {
@@ -98,6 +107,10 @@ impl IsSize for Area {
         self.size_mut().width_mut()
     }
 }
+
+impl Placed for Area {}
+
+impl PlacedObject for Area {}
 
 impl ProvidesArea for Area {
     fn provide_area(&self) -> Area {
@@ -120,3 +133,5 @@ impl ProvidesSize for Area {
         self.size().provide_size()
     }
 }
+
+impl Shape for Area {}
