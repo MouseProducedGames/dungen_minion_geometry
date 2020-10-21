@@ -36,6 +36,38 @@ impl Position {
     pub fn zero() -> Self {
         Self { x: 0, y: 0 }
     }
+
+    /// Represents a constant with x = 0 and y = -1.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::Position;
+    /// assert!(Position::new(0, -1) == Position::NORTH);
+    /// ```
+    pub const NORTH: Position = Self { x: 0, y: -1 };
+
+    /// Represents a constant with x = 1 and y = 0.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::Position;
+    /// assert!(Position::new(1, 0) == Position::EAST);
+    /// ```
+    pub const EAST: Position = Self { x: 1, y: 0 };
+
+    /// Represents a constant with x = 0 and y = 1.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::Position;
+    /// assert!(Position::new(0, 1) == Position::SOUTH);
+    /// ```
+    pub const SOUTH: Position = Self { x: 0, y: 1 };
+
+    /// Represents a constant with x = -1 and y = 0.
+    ///
+    /// ```
+    /// # use dungen_minion_geometry::Position;
+    /// assert!(Position::new(-1, 0) == Position::WEST);
+    /// ```
+    pub const WEST: Position = Self { x: -1, y: 0 };
 }
 
 impl Add for Position {
