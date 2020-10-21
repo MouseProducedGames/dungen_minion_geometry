@@ -6,7 +6,7 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    HasArea, HasPosition, HasSize, IntersectsPos, IsArea, IsPosition, IsSize, Length, Placed,
+    HasArea, HasPosition, HasSize, IntersectsPosition, IsArea, IsPosition, IsSize, Length, Placed,
     PlacedObject, Position, ProvidesArea, ProvidesPosition, ProvidesSize, Shape, Size,
 };
 
@@ -79,7 +79,7 @@ impl HasSize for Area {
     }
 }
 
-impl IntersectsPos for Area {
+impl IntersectsPosition for Area {
     fn intersects_pos(&self, pos: Position) -> bool {
         !(pos.x() < self.position.x()
             || pos.y() < self.position.y()

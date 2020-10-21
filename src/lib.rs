@@ -51,7 +51,7 @@ pub use has_area::HasArea;
 pub use has_position::HasPosition;
 pub use has_size::HasSize;
 pub use intersects_placed_shape::IntersectsPlacedShape;
-pub use intersects_pos::IntersectsPos;
+pub use intersects_pos::IntersectsPosition;
 pub use intersects_shape::IntersectsShape;
 pub use is_area::IsArea;
 pub use is_position::IsPosition;
