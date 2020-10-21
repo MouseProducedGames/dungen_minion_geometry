@@ -36,6 +36,20 @@ pub enum CardinalRotation {
     Left90,
 }
 
+impl Add<CardinalRotation> for CardinalRotation {
+    type Output = CardinalRotation;
+
+    fn add(self, other: CardinalRotation) -> Self::Output {
+        Self::from(i8::from(self) + i8::from(other))
+    }
+}
+
+impl AddAssign<CardinalRotation> for CardinalRotation {
+    fn add_assign(&mut self, other: CardinalRotation) {
+        *self = *self + other
+    }
+}
+
 impl From<i8> for CardinalRotation {
     fn from(value: i8) -> Self {
         let mut value = value % 4;
@@ -61,20 +75,6 @@ impl From<CardinalRotation> for i8 {
             CardinalRotation::Full180 => 2,
             CardinalRotation::Left90 => 3,
         }
-    }
-}
-
-impl Add<CardinalRotation> for CardinalRotation {
-    type Output = CardinalRotation;
-
-    fn add(self, other: CardinalRotation) -> Self::Output {
-        Self::from(i8::from(self) + i8::from(other))
-    }
-}
-
-impl AddAssign<CardinalRotation> for CardinalRotation {
-    fn add_assign(&mut self, other: CardinalRotation) {
-        *self = *self + other
     }
 }
 

@@ -40,6 +40,20 @@ pub enum CardinalDirection {
     West,
 }
 
+impl Add<CardinalRotation> for CardinalDirection {
+    type Output = CardinalDirection;
+
+    fn add(self, other: CardinalRotation) -> Self::Output {
+        Self::from(i8::from(self) + i8::from(other))
+    }
+}
+
+impl AddAssign<CardinalRotation> for CardinalDirection {
+    fn add_assign(&mut self, other: CardinalRotation) {
+        *self = *self + other
+    }
+}
+
 impl From<i8> for CardinalDirection {
     fn from(value: i8) -> Self {
         let mut value = value % 4;
@@ -65,20 +79,6 @@ impl From<CardinalDirection> for i8 {
             CardinalDirection::South => 2,
             CardinalDirection::West => 3,
         }
-    }
-}
-
-impl Add<CardinalRotation> for CardinalDirection {
-    type Output = CardinalDirection;
-
-    fn add(self, other: CardinalRotation) -> Self::Output {
-        Self::from(i8::from(self) + i8::from(other))
-    }
-}
-
-impl AddAssign<CardinalRotation> for CardinalDirection {
-    fn add_assign(&mut self, other: CardinalRotation) {
-        *self = *self + other
     }
 }
 
