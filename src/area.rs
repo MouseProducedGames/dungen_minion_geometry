@@ -80,11 +80,11 @@ impl HasSize for Area {
 }
 
 impl IntersectsPosition for Area {
-    fn intersects_pos(&self, pos: Position) -> bool {
-        !(pos.x() < self.position.x()
-            || pos.y() < self.position.y()
-            || pos.x() > self.right()
-            || pos.y() > self.bottom())
+    fn intersects_position(&self, position: Position) -> bool {
+        !(position.x() < self.position.x()
+            || position.y() < self.position.y()
+            || position.x() > self.right()
+            || position.y() > self.bottom())
     }
 }
 
