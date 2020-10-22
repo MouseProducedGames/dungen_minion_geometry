@@ -51,7 +51,7 @@ pub trait IsArea: HasArea + IsSize + ProvidesArea {
         *self.width_mut() = width;
     }
 
-    /// The right-most coordinate of the area.
+    /// The bottom-most coordinate of the area.
     ///
     /// A geometic tile area with a height of 1, has the same bottom tile as its top tile.
     fn bottom(&self) -> Coord {
