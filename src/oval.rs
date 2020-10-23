@@ -46,24 +46,10 @@ use super::{
 ///     // Perform a flood-fill to ensure the oval is bounded.
 ///     let mut queue = VecDeque::new();
 ///     let mut visited = HashSet::new();
-///     // Given the minimum size of the test oval, we get a point in the middle which should
-///     // be guaranteed empty.
-///     let start_position = Position::new(
-///         (oval.left() / 2) + (oval.right() / 2),
-///         (oval.top() / 2) + (oval.bottom() / 2),
-///     );
-///     // We test it anyway, just in case.
-///     if oval.contains_local_position(start_position) != Containment::Contains {
-///         draw_oval(oval);
-///         // The assert is not simplified, for tracking purposes.
-///         assert!(oval.contains_local_position(start_position) == Containment::Contains);
-///         // And if the assert doesn't fire, we panic.
-///         panic!(
-///             "Assert that should have fired, didn't! {}",
-///             oval.contains_local_position(start_position)
-///         );
-///     }
 ///
+///     // An oval contains a rectangular area which is guaranteed to be entirely inside that oval.
+///     // Our starting positions are on the outside of that rectangle, and the rectangles'
+///     // interior can be marked as visited.
 ///     let fwidth = ((oval.area().width() as f64 / 2.0) - 0.5).max(0.0);
 ///     let fheight = ((oval.area().height() as f64 / 2.0) - 0.5).max(0.0);
 ///     let fmin_bounds = (fwidth.min(fheight) - 1.0).max(0.0);
@@ -210,25 +196,6 @@ impl Oval {
 
 impl ContainsLocalPosition for Oval {
     fn contains_local_position(&self, position: Position) -> Containment {
-        /* let fwidth = ((self.area.width() as f64 / 2.0) - 0.5).max(0.0);
-        let fheight = ((self.area.height() as f64 / 2.0) - 0.5).max(0.0);
-        let ratio: f64 = fwidth / fheight;
-        let flocal_center_x = self.left() as f64 * 0.5 + self.right() as f64 * 0.5;
-        let flocal_center_y = self.top() as f64 * 0.5 + self.bottom() as f64 * 0.5;
-        let adjusted_position_x = position.x() as f64 - flocal_center_x;
-        let adjusted_position_y = position.y() as f64 - flocal_center_y;
-
-        let test_value = ((adjusted_position_x * adjusted_position_x) / (fwidth * fwidth))
-            + (adjusted_position_y * adjusted_position_y) / (fheight * fheight);
-
-        if test_value > 1.0 {
-            Containment::Disjoint
-        } else if test_value == 1.0 {
-            Containment::Intersects
-        } else {
-            Containment::Contains
-        } */
-
         if !self.intersects_local_position(position) {
             return Containment::Disjoint;
         }
@@ -262,107 +229,6 @@ impl ContainsLocalPosition for Oval {
         } else {
             Containment::Contains
         }
-
-        /* // let fwidth = self.area.width() as f64 / 2.0;
-        // let fheight = self.area.height() as f64 / 2.0;
-        let fwidth = ((self.area.width() as f64 / 2.0) - 0.5).max(0.0);
-        let fheight = ((self.area.height() as f64 / 2.0) - 0.5).max(0.0);
-        let ratio: f64 = fwidth / fheight;
-        let flocal_center_x = self.left() as f64 * 0.5 + self.right() as f64 * 0.5;
-        let flocal_center_y = self.top() as f64 * 0.5 + self.bottom() as f64 * 0.5;
-        let adjusted_position_x = position.x() as f64 - flocal_center_x;
-        let adjusted_position_y = position.y() as f64 - flocal_center_y;
-
-        // print!("( {}, {} ) = {}", adjusted_position_x, adjusted_position_y, intersection_check);
-
-        let circular_position_x = adjusted_position_x / ratio;
-        let circular_position_y = adjusted_position_y;
-
-        const SQRT2: f64 = 1.4142135623730950488016887242097f64;
-        let intersection_check =
-            if (circular_position_x.abs() - circular_position_y.abs()).abs() >= f64::EPSILON {
-                let value_x = (adjusted_position_x / (fwidth - 0.5).max(0.0)).abs();
-                let value_y = (adjusted_position_y / (fheight - 0.5).max(0.0)).abs();
-                let mul_x = (1.0 * (1.0 - value_y)) + (SQRT2 * value_y);
-                let mul_y = (1.0 * (1.0 - value_x)) + (SQRT2 * value_x);
-                // let mul_x2 = mul_x / mul_y;
-                // let mul_y2 = mul_y / mul_x;
-                // let mul = mul_x2 * mul_y2;
-                /* let mul = ((mul_x * mul_y).abs() + (mul_y * mul_x).abs())
-                    / ((mul_x * mul_x) + (mul_y * mul_y));
-                let mul_x2 = ((mul_x * mul_x) + (mul_x * mul_x))
-                    / ((mul_x * mul_y).abs() + (mul_y * mul_x).abs());
-                let mul_y2 = ((mul_y * mul_y) + (mul_y * mul_y))
-                    / ((mul_x * mul_y).abs() + (mul_y * mul_x).abs()); */
-                // let value_x2 = value_x * ((mul_x2 * (1.0 - mul)) + (mul_x * mul));
-                // let value_y2 = value_y * ((mul_y2 * (1.0 - mul)) + (mul_y * mul));
-                // let mul_x2 = ((mul_x * mul_x) + (mul_x * mul_x)) / ((2.0) + (2.0));
-                // let mul_y2 = ((mul_y * mul_y) + (mul_y * mul_y)) / ((2.0) + (2.0));
-                /* let mul_x2 = ((mul_x * mul_y)) / ((2.0));
-                let mul_y2 = ((mul_x * mul_y)) / ((2.0)); */
-                let mul = ((mul_x * mul_y).abs() + (mul_y * mul_x).abs()) / (4.0);
-                let value_x2 = value_x * (mul_x * mul);
-                let value_y2 = value_y * (mul_y * mul);
-                (value_x2 / ratio) + value_y2
-            // let interpolation = interpolation_x.min(interpolation_y);
-            // ((1.0 * (1.0 - interpolation)) + ((1.0 / circle_ratio) * interpolation))
-            /* let interpolation = circular_position_x.abs()
-                / (circular_position_x.abs() + circular_position_y.abs());
-            (1.0 * interpolation) * (value * (1.0 - interpolation)) */
-            // + ((0.0 * (1.0 - interpolation_y)) + (1.0 * interpolation_x))
-            } else {
-                1.0
-            };
-        let inverse_intersection_check = 1.0 / intersection_check;
-
-        let length_sqr = (adjusted_position_x * adjusted_position_x)
-            + (adjusted_position_y * adjusted_position_y);
-        let length = length_sqr.sqrt();
-        let size_length_sqr = (fheight * fheight) + (fheight * fheight);
-        let size_length = size_length_sqr.sqrt();
-        let length_position_x = (adjusted_position_x / length) * size_length * ratio;
-        let length_position_y = (adjusted_position_y / length) * size_length;
-        let diff_x = length_position_x.abs() - adjusted_position_x.abs();
-        let diff_y = length_position_y.abs() - adjusted_position_y.abs();
-
-        const SQRT8: f64 = 2.8284271247461900976033774484194f64;
-        let intersection = intersection_check.max(inverse_intersection_check).max(SQRT8);
-        let radius = fheight;
-        let radius2 = (radius - intersection).max(0.0);
-        let dist = ((circular_position_x * circular_position_x)
-            + (circular_position_y * circular_position_y))
-            .sqrt();
-        let diff = radius - dist;
-        if radius < dist {
-            Containment::Disjoint
-        } else if (radius2 <= dist
-            || (diff_x >= 0.0 && diff_x <= intersection && diff_y >= 0.0 && diff_y <= intersection))
-            && !(self.intersects_local_position(position + Position::NORTH)
-                && self.intersects_local_position(position + Position::NORTH + Position::EAST)
-                && self.intersects_local_position(position + Position::EAST)
-                && self.intersects_local_position(position + Position::SOUTH + Position::EAST)
-                && self.intersects_local_position(position + Position::SOUTH)
-                && self.intersects_local_position(position + Position::SOUTH + Position::WEST)
-                && self.intersects_local_position(position + Position::WEST)
-                && self.intersects_local_position(position + Position::NORTH + Position::WEST))
-        // (diff_x >= 0.0 && diff_x <= 1.0) && (diff_y >= 0.0 && diff_y <= 1.0)
-        /* diff <= intersection_check * 0.5)
-        // || (diff <= (intersection_check.max(inverse_intersection_check) * SQRT8).max(SQRT8)
-        || (((adjusted_position_x.abs() - length_position_x.abs())
-        ||)
-            && !(self.intersects_local_position(position + Position::NORTH)
-                && self.intersects_local_position(position + Position::NORTH + Position::EAST)
-                && self.intersects_local_position(position + Position::EAST)
-                && self.intersects_local_position(position + Position::SOUTH + Position::EAST)
-                && self.intersects_local_position(position + Position::SOUTH)
-                && self.intersects_local_position(position + Position::SOUTH + Position::WEST)
-                && self.intersects_local_position(position + Position::WEST)
-                && self.intersects_local_position(position + Position::NORTH + Position::WEST))) */
-        {
-            Containment::Intersects
-        } else {
-            Containment::Contains
-        } */
     }
 }
 
@@ -405,12 +271,8 @@ impl IntersectsLocalPosition for Oval {
         let ratio: f64 = fwidth / fheight;
         let flocal_center_x = fwidth;
         let flocal_center_y = fheight;
-        // let flocal_center_x = self.left() as f64 * 0.5 + self.right() as f64 * 0.5;
-        // let flocal_center_y = self.top() as f64 * 0.5 + self.bottom() as f64 * 0.5;
         let adjusted_position_x = position.x() as f64 - flocal_center_x;
         let adjusted_position_y = position.y() as f64 - flocal_center_y;
-
-        // print!("( {}, {} ) = {}", adjusted_position_x, adjusted_position_y, intersection_check);
 
         let circular_position_x = adjusted_position_x / ratio;
         let circular_position_y = adjusted_position_y;
