@@ -5,7 +5,10 @@ use std::fmt;
 use std::ops::Mul;
 
 // Internal includes.
-use super::{Area, CardinalRotation, HasSize, IsSize, Length, ProvidesArea, ProvidesSize};
+use super::{
+    Area, CardinalRotation, HasHeight, HasSize, HasWidth, IsSize, Length, ProvidesArea,
+    ProvidesSize,
+};
 
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
 ///
@@ -54,7 +57,9 @@ impl HasSize for Size {
     }
 }
 
-impl IsSize for Size {
+impl IsSize for Size {}
+
+impl HasHeight for Size {
     fn height(&self) -> Length {
         self.height
     }
@@ -62,7 +67,9 @@ impl IsSize for Size {
     fn height_mut(&mut self) -> &mut Length {
         &mut self.height
     }
+}
 
+impl HasWidth for Size {
     fn width(&self) -> Length {
         self.width
     }

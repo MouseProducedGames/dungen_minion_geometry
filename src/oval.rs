@@ -4,9 +4,9 @@
 
 // Internal includes.
 use super::{
-    Area, Containment, ContainsLocalPosition, ContainsPosition, Coord, HasArea, HasPosition,
-    HasSize, IntersectsLocalPosition, IntersectsPosition, IsPosition, IsSize, Length, Placed,
-    PlacedObject, Position, Shape, Size,
+    Area, Containment, ContainsLocalPosition, ContainsPosition, Coord, HasArea, HasHeight,
+    HasPosition, HasSize, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsPosition,
+    Length, Placed, PlacedObject, Position, Shape, Size,
 };
 
 /// Defines an oval by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
