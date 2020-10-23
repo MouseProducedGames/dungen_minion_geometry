@@ -17,7 +17,11 @@ use super::{
 /// The oval is calculated from these extents.
 /// ```
 /// # use dungen_minion_geometry::*;
+///
+/// use rayon::prelude::*;
+///
 /// use std::collections::{HashSet, VecDeque};
+///
 /// fn draw_oval(oval: Oval) {
 ///     for y in oval.top()..=oval.bottom() {
 ///         for x in oval.left()..=oval.right() {
@@ -33,7 +37,7 @@ use super::{
 ///     }
 /// }
 ///
-/// for _ in 0..5_000 {
+/// [0..5_000].par_iter().for_each(|_i| {
 ///     let oval = Oval::new(Area::new(
 ///         Position::new(0, 0),
 ///         SizeRange::new(Size::new(10, 10), Size::new(80, 80)).provide_size(),
@@ -127,7 +131,7 @@ use super::{
 ///         }
 ///     }
 ///     // draw_oval(oval);
-/// }
+/// });
 /// // panic!("Test.");
 /// ```
 #[derive(Copy, Clone, Debug, Display)]
