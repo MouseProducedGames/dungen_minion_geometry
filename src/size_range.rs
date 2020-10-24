@@ -5,7 +5,9 @@ use rand::{thread_rng, Rng};
 // Standard includes.
 
 // Internal includes.
-use super::{Area, HasHeight, HasWidth, ProvidesArea, ProvidesSize, Size};
+use super::{
+    Area, HasHeight, HasWidth, PlacedShape, ProvidesArea, ProvidesPlacedShape, ProvidesSize, Size,
+};
 
 /// Provides a range of [`Size`](struct.Size.html)s, from a minimum size to a maximum size.
 ///
@@ -60,6 +62,12 @@ impl Distribution<Size> for SizeRange {
 impl From<Size> for SizeRange {
     fn from(size: Size) -> Self {
         Self::new(size, size)
+    }
+}
+
+impl ProvidesPlacedShape for SizeRange {
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(self.provide_area())
     }
 }
 

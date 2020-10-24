@@ -6,7 +6,7 @@
 use super::{
     Area, Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasHeight, HasPosition,
     HasSize, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsPosition, Length, Placed,
-    PlacedObject, Position, Shape, Size,
+    PlacedObject, PlacedShape, Position, ProvidesPlacedShape, Shape, Size,
 };
 
 /// Defines an oval by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -249,5 +249,11 @@ impl IntersectsPosition for Oval {}
 impl Placed for Oval {}
 
 impl PlacedObject for Oval {}
+
+impl ProvidesPlacedShape for Oval {
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(*self)
+    }
+}
 
 impl Shape for Oval {}

@@ -6,8 +6,9 @@ use std::ops::Mul;
 
 // Internal includes.
 use super::{
-    Area, CardinalRotation, HasHeight, HasSize, HasWidth, IsSize, Length, ProvidesArea,
-    ProvidesSize,
+    Area, CardinalRotation, Containment, ContainsLocalPosition, HasHeight, HasSize, HasWidth,
+    IntersectsLocalPosition, IsPosition, IsSize, Length, PlacedShape, Position, ProvidesArea,
+    ProvidesPlacedShape, ProvidesShape, ProvidesSize, Shape,
 };
 
 /// Defines a `Size` with the given height and width, in [`Length`](type.Length.html) units.
@@ -41,6 +42,24 @@ impl Size {
     }
 }
 
+impl ContainsLocalPosition for Size {
+    fn contains_local_position(&self, position: Position) -> Containment {
+        if position.x() < 0
+            || position.y() < 0
+            || position.x() as Length >= self.width()
+            || position.y() as Length >= self.height()
+        {
+            Containment::Disjoint
+        } else if position.x() as Length + 1 == self.width()
+            || position.y() as Length + 1 == self.height()
+        {
+            Containment::Intersects
+        } else {
+            Containment::Contains
+        }
+    }
+}
+
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "( width: {}, height: {} )", self.width(), self.height())
@@ -54,6 +73,15 @@ impl HasSize for Size {
 
     fn size_mut(&mut self) -> &mut Size {
         self
+    }
+}
+
+impl IntersectsLocalPosition for Size {
+    fn intersects_local_position(&self, position: Position) -> bool {
+        !(position.x() < 0
+            || position.y() < 0
+            || position.x() as Length >= self.width()
+            || position.y() as Length >= self.height())
     }
 }
 
@@ -117,8 +145,22 @@ impl ProvidesArea for Size {
     }
 }
 
+impl ProvidesPlacedShape for Size {
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(self.provide_area())
+    }
+}
+
+impl ProvidesShape for Size {
+    fn provide_shape(&self) -> &dyn Shape {
+        self
+    }
+}
+
 impl ProvidesSize for Size {
     fn provide_size(&self) -> Size {
         *self.size()
     }
 }
+
+impl Shape for Size {}

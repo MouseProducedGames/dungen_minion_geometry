@@ -6,8 +6,8 @@ use rand::{thread_rng, Rng};
 
 // Internal includes.
 use super::{
-    Area, HasPosition, HasSize, Position, PositionRange, ProvidesArea, ProvidesPosition,
-    ProvidesSize, Size, SizeRange,
+    Area, HasPosition, HasSize, PlacedShape, Position, PositionRange, ProvidesArea,
+    ProvidesPlacedShape, ProvidesPosition, ProvidesSize, Size, SizeRange,
 };
 
 /// Provides a range of [`Area`](struct.Area.html)s, from a minimum area to a maximum area.
@@ -80,6 +80,12 @@ impl From<Area> for AreaRange {
 impl ProvidesArea for AreaRange {
     fn provide_area(&self) -> Area {
         self.sample(&mut thread_rng())
+    }
+}
+
+impl ProvidesPlacedShape for AreaRange {
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(self.provide_area())
     }
 }
 

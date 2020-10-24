@@ -6,10 +6,10 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    Containment, ContainsLocalPosition, HasArea, HasBottom, HasHeight, HasLeft, HasPosition,
-    HasRight, HasSize, HasTop, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsArea,
-    IsPosition, IsSize, Placed, PlacedObject, Position, ProvidesArea, ProvidesPosition,
-    ProvidesSize, Shape, Size,
+    Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasBottom, HasHeight, HasLeft,
+    HasPosition, HasRight, HasSize, HasTop, HasWidth, IntersectsLocalPosition, IntersectsPosition,
+    IsArea, IsPosition, IsSize, Placed, PlacedObject, PlacedShape, Position, ProvidesArea,
+    ProvidesPlacedShape, ProvidesPosition, ProvidesSize, Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -61,6 +61,8 @@ impl ContainsLocalPosition for Area {
         }
     }
 }
+
+impl ContainsPosition for Area {}
 
 impl fmt::Display for Area {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -126,6 +128,12 @@ impl PlacedObject for Area {}
 impl ProvidesArea for Area {
     fn provide_area(&self) -> Area {
         *self
+    }
+}
+
+impl ProvidesPlacedShape for Area {
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(*self)
     }
 }
 
