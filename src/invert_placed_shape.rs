@@ -30,16 +30,17 @@ use super::{
 /// // Positions inside of the inverted area do not register as intersecting it.
 /// assert!(inverted_area.intersects_position(Position::new(1, 1)) == false);
 /// ```
+#[derive(Clone)]
 pub struct InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize + Sized,
+    TPlacedShape: Clone + Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized + Sized,
 {
     inner: TPlacedShape,
 }
 
-impl<TPlacedShape> InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize + Sized,
+    TPlacedShape: Clone + Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized + Sized,
 {
     /// Creates a new inverted `PlacedShape` out of the inner `PlacedShape`.
     pub fn new(inner: TPlacedShape) -> Self {
@@ -47,9 +48,9 @@ where
     }
 }
 
-impl<TPlacedShape> ContainsLocalPosition for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> ContainsLocalPosition for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn contains_local_position(&self, position: Position) -> Containment {
         match self.inner.contains_local_position(position) {
@@ -60,14 +61,14 @@ where
     }
 }
 
-impl<TPlacedShape> ContainsPosition for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> ContainsPosition for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> HasArea for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> HasArea for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn area(&self) -> &Area {
         self.inner.area()
@@ -78,9 +79,9 @@ where
     }
 }
 
-impl<TPlacedShape> HasPosition for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> HasPosition for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn position(&self) -> &Position {
         self.inner.position()
@@ -91,9 +92,9 @@ where
     }
 }
 
-impl<TPlacedShape> HasSize for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> HasSize for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn size(&self) -> &Size {
         self.inner.size()
@@ -104,59 +105,63 @@ where
     }
 }
 
-impl<TPlacedShape> IntersectsLocalPosition for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> IntersectsLocalPosition for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn intersects_local_position(&self, position: Position) -> bool {
         self.contains_local_position(position) != Containment::Disjoint
     }
 }
 
-impl<TPlacedShape> IntersectsPosition for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> IntersectsPosition for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> IsArea for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> IsArea for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> IsSize for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> IsSize for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> Placed for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> Placed for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> PlacedObject for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> PlacedObject for InvertPlacedShape<TPlacedShape> where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized
 {
 }
 
-impl<TPlacedShape> ProvidesArea for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> ProvidesArea for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn provide_area(&self) -> Area {
         self.inner.provide_area()
     }
 }
 
-impl<TPlacedShape> ProvidesSize for InvertPlacedShape<TPlacedShape>
+impl<TPlacedShape: 'static> ProvidesSize for InvertPlacedShape<TPlacedShape>
 where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize,
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
     fn provide_size(&self) -> Size {
         self.inner.provide_size()
     }
 }
 
-impl<TPlacedShape> Shape for InvertPlacedShape<TPlacedShape> where
-    TPlacedShape: PlacedShape + ProvidesArea + ProvidesSize
+impl<TPlacedShape: 'static> Shape for InvertPlacedShape<TPlacedShape>
+where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
 {
+    fn box_shape_clone(&self) -> Box<dyn Shape> {
+        Box::new((*self).clone())
+    }
 }

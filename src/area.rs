@@ -6,10 +6,10 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasBottom, HasHeight, HasLeft,
-    HasPosition, HasRight, HasSize, HasTop, HasWidth, IntersectsLocalPosition, IntersectsPosition,
-    IsArea, IsPosition, IsSize, Placed, PlacedObject, PlacedShape, Position, ProvidesArea,
-    ProvidesPlacedShape, ProvidesPosition, ProvidesSize, Shape, Size,
+    Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasHeight, HasPosition, HasSize,
+    HasWidth, IntersectsLocalPosition, IntersectsPosition, IsArea, IsPosition, IsSize, Length,
+    Placed, PlacedObject, PlacedShape, Position, ProvidesArea, ProvidesPlacedShape,
+    ProvidesPosition, ProvidesSize, Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -41,17 +41,17 @@ impl Area {
 
 impl ContainsLocalPosition for Area {
     fn contains_local_position(&self, position: Position) -> Containment {
-        if position.x() < self.left()
-            || position.y() < self.top()
-            || position.x() > self.right()
-            || position.y() > self.bottom()
+        if position.x() < 0
+            || position.y() < 0
+            || (position.x() as Length) >= self.width()
+            || (position.y() as Length) >= self.height()
         {
             // It's entirely outside.
             Containment::Disjoint
-        } else if position.x() > self.left()
-            && position.y() > self.top()
-            && position.x() < self.right()
-            && position.y() < self.bottom()
+        } else if position.x() > 0
+            && position.y() > 0
+            && (position.x() as Length + 1) < self.width()
+            && (position.y() as Length + 1) < self.height()
         {
             // It's entirely inside.
             Containment::Contains
@@ -153,4 +153,8 @@ impl ProvidesSize for Area {
     }
 }
 
-impl Shape for Area {}
+impl Shape for Area {
+    fn box_shape_clone(&self) -> Box<dyn Shape> {
+        Box::new(*self)
+    }
+}

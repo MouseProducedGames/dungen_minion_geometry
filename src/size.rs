@@ -163,4 +163,8 @@ impl ProvidesSize for Size {
     }
 }
 
-impl Shape for Size {}
+impl Shape for Size {
+    fn box_shape_clone(&self) -> Box<dyn Shape> {
+        Box::new(*self)
+    }
+}
