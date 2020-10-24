@@ -4,9 +4,9 @@
 
 // Internal includes.
 use super::{
-    Area, Containment, ContainsLocalPosition, ContainsPosition, Coord, HasArea, HasHeight,
-    HasPosition, HasSize, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsPosition,
-    Length, Placed, PlacedObject, Position, Shape, Size,
+    Area, Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasHeight, HasPosition,
+    HasSize, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsPosition, Length, Placed,
+    PlacedObject, Position, Shape, Size,
 };
 
 /// Defines an oval by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
@@ -132,66 +132,6 @@ impl Oval {
     pub fn new(area: Area) -> Self {
         Self { area }
     }
-
-    /// The left-most coordinate of the oval.
-    ///
-    /// Horizontal coordinates increase towards the east.
-    pub fn left(&self) -> Coord {
-        self.position().x()
-    }
-
-    /// A mutable reference to the left-most coordinate of the oval.
-    ///
-    /// Horizontal coordinates increase towards the east.
-    pub fn left_mut(&mut self) -> &mut Coord {
-        self.position_mut().x_mut()
-    }
-
-    /// The top-most coordinate of the oval.
-    ///
-    /// Vertical coordinates increase towards the south.
-    pub fn top(&self) -> Coord {
-        self.position().y()
-    }
-
-    /// A mutable reference to the top-most coordinate of the oval.
-    ///
-    /// Vertical coordinates increase towards the south.
-    pub fn top_mut(&mut self) -> &mut Coord {
-        self.position_mut().y_mut()
-    }
-
-    /// The right-most coordinate of the oval.
-    ///
-    /// A geometic tile area with a width of 1, has the same right tile as its left tile.
-    pub fn right(&self) -> Coord {
-        self.position().x() + (self.size().width() as Coord - 1).max(0)
-    }
-
-    /// Sets the right-most coordinate of the oval.
-    ///
-    /// Cannot set the right-most coordinate to less than the x-coordinate.
-    pub fn right_set(&mut self, value: Coord) {
-        let width_coord = (value - self.position().x()) + 1;
-        let width = width_coord.max(0) as Length;
-        *self.size_mut().width_mut() = width;
-    }
-
-    /// The bottom-most coordinate of the oval.
-    ///
-    /// A geometic tile area with a height of 1, has the same bottom tile as its top tile.
-    pub fn bottom(&self) -> Coord {
-        self.position().y() + (self.size().height() as Coord - 1).max(1)
-    }
-
-    /// Sets the bottom-most coordinate of the oval.
-    ///
-    /// Cannot set the bottom-most coordinate to less than the y-coordinate.
-    pub fn bottom_set(&mut self, value: Coord) {
-        let height_coord = (value - self.position().y()) + 1;
-        let height = height_coord.max(0) as Length;
-        *self.size_mut().height_mut() = height;
-    }
 }
 
 impl ContainsLocalPosition for Oval {
@@ -244,6 +184,16 @@ impl HasArea for Oval {
     }
 }
 
+impl HasHeight for Oval {
+    fn height(&self) -> Length {
+        self.size().height()
+    }
+
+    fn height_mut(&mut self) -> &mut Length {
+        self.size_mut().height_mut()
+    }
+}
+
 impl HasPosition for Oval {
     fn position(&self) -> &Position {
         self.area.position()
@@ -261,6 +211,16 @@ impl HasSize for Oval {
 
     fn size_mut(&mut self) -> &mut Size {
         self.area.size_mut()
+    }
+}
+
+impl HasWidth for Oval {
+    fn width(&self) -> Length {
+        self.size().width()
+    }
+
+    fn width_mut(&mut self) -> &mut Length {
+        self.size_mut().width_mut()
     }
 }
 

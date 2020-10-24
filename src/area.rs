@@ -6,9 +6,10 @@ use std::fmt;
 
 // Internal includes.
 use super::{
-    Containment, ContainsLocalPosition, HasArea, HasHeight, HasPosition, HasSize, HasWidth,
-    IntersectsLocalPosition, IntersectsPosition, IsArea, IsPosition, IsSize, Placed, PlacedObject,
-    Position, ProvidesArea, ProvidesPosition, ProvidesSize, Shape, Size,
+    Containment, ContainsLocalPosition, HasArea, HasBottom, HasHeight, HasLeft, HasPosition,
+    HasRight, HasSize, HasTop, HasWidth, IntersectsLocalPosition, IntersectsPosition, IsArea,
+    IsPosition, IsSize, Placed, PlacedObject, Position, ProvidesArea, ProvidesPosition,
+    ProvidesSize, Shape, Size,
 };
 
 /// Defines an `Area` by a [`Position`](struct.Position.html) and [`Size`](struct.Size.html).
