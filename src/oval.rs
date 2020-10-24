@@ -157,7 +157,11 @@ impl ContainsLocalPosition for Oval {
         let adjusted_position_x = position.x() as f64 - flocal_center_x;
         let adjusted_position_y = position.y() as f64 - flocal_center_y;
 
-        if adjusted_position_x.abs() <= fmin_bounds && adjusted_position_y.abs() <= fmin_bounds {
+        if adjusted_position_x.abs() <= fmin_bounds
+            && adjusted_position_y.abs() <= fmin_bounds
+            && (fmin_bounds - adjusted_position_x.abs() >= 1.0)
+            && (fmin_bounds - adjusted_position_y.abs() >= 1.0)
+        {
             Containment::Contains
         } else if !(self.intersects_local_position(position + Position::NORTH)
             && self.intersects_local_position(position + Position::NORTH + Position::EAST)
