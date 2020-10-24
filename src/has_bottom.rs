@@ -7,7 +7,7 @@ use super::{Coord, HasHeight, HasPosition, IsPosition, Length};
 
 /// The trait for objects which have a bottom coordinate.
 ///
-/// For objects which implement [`HasPosition`](struct.HasPosition.html) and [`HasHeight`](trait.HasHeight.html), the bottom coordinate is equal to `self.position().y() + (self.height() as Coord - 1).max(0)`.
+/// For objects which implement [`HasPosition`](trait.HasPosition.html) and [`HasHeight`](trait.HasHeight.html), the bottom coordinate is equal to `self.position().y() + (self.height() as Coord - 1).max(0)`.
 pub trait HasBottom {
     /// The bottom-most coordinate of the object.
     ///

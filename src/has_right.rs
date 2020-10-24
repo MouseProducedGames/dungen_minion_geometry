@@ -7,7 +7,7 @@ use super::{Coord, HasPosition, HasWidth, IsPosition, Length};
 
 /// The trait for objects which have a right coordinate.
 ///
-/// For objects which implement [`HasPosition`](struct.HasPosition.html) and [`HasWidth`](trait.HasWidth.html), the right coordinate is equal to `self.position().x() + (self.width() as Coord - 1).max(0)`.
+/// For objects which implement [`HasPosition`](trait.HasPosition.html) and [`HasWidth`](trait.HasWidth.html), the right coordinate is equal to `self.position().x() + (self.width() as Coord - 1).max(0)`.
 pub trait HasRight {
     /// The right-most coordinate of the object.
     ///

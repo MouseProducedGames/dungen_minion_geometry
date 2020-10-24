@@ -7,7 +7,7 @@ use super::{Coord, HasPosition, HasWidth, IsPosition};
 
 /// The trait for objects which have a left coordinate.
 ///
-/// For objects which implement [`HasPosition`](struct.HasPosition.html) and [`HasWidth`](trait.HasWidth.html), the left coordinate is equal to `(self.position().x()`. In this case, `HasWidth` is a bound ensuring that the object can sensibly have a `self.left()`.
+/// For objects which implement [`HasPosition`](trait.HasPosition.html) and [`HasWidth`](trait.HasWidth.html), the left coordinate is equal to `(self.position().x()`. In this case, `HasWidth` is a bound ensuring that the object can sensibly have a `self.left()`.
 pub trait HasLeft {
     /// The left-most coordinate of the object.
     ///
