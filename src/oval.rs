@@ -38,10 +38,10 @@ use super::{
 /// }
 ///
 /// [0..5_000].par_iter().for_each(|_i| {
-///     let oval = Oval::new(Area::new(
+///     let oval = Oval::new(
 ///         Position::new(0, 0),
 ///         SizeRange::new(Size::new(10, 10), Size::new(80, 80)).provide_size(),
-///     ));
+///     );
 ///
 ///     // Perform a flood-fill to ensure the oval is bounded.
 ///     let mut queue = VecDeque::new();
@@ -129,8 +129,10 @@ impl Oval {
     /// Creates a new `Oval` given an [`Area`](struct.Position.html)
     ///
     /// The [`Position`](struct.Position.html) of the [`area`](struct.Area.html) is the top-left corner of the rectangle surrounding the oval, and the [`Size`](struct.Size.html) of the `Area` determines the bottom-right corner of the rectangle surrounding the oval.
-    pub fn new(area: Area) -> Self {
-        Self { area }
+    pub fn new(position: Position, size: Size) -> Self {
+        Self {
+            area: Area::new(position, size),
+        }
     }
 }
 
