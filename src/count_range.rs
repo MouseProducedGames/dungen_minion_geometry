@@ -12,20 +12,22 @@ use super::{Count, ProvidesCount};
 /// Both of these methods provide a random count between the minimum count in the range, and the maximum count in the range.
 /// ```
 /// # use dungen_minion_geometry::*;
+/// use std::sync::Arc;
+/// use rayon::prelude::*;
+///
 /// use rand::{thread_rng, Rng};
 /// // The maximum count is an inclusive bound.
-/// let count_range = CountRange::new(4, 13);
+/// let count_range = Arc::new(CountRange::new(4, 13));
 /// // Random generators are hard to guarantee. But this should be viable.
-/// for _ in 0..5_000 {
+/// [0..5_000].par_iter().for_each(|_i| {
 ///     let rand_count = count_range.provide_count();
 ///     assert!(rand_count >= 4 && rand_count <= 13);
-/// }
+/// });
 ///
-/// let mut rng = thread_rng();
-/// for _ in 0..5_000 {
-///     let rand_count = rng.sample(count_range);
+/// [0..5_000].par_iter().for_each(|_i| {
+///     let rand_count = thread_rng().sample(*count_range);
 ///     assert!(rand_count >= 4 && rand_count <= 13);
-/// }
+/// });
 /// ```
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct CountRange {

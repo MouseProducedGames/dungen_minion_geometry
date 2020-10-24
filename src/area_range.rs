@@ -15,31 +15,33 @@ use super::{
 /// Both of these methods provide a random area between the minimum area in the range, and the maximum area in the range. The x- and y-components of the returned `Area` are bounded together, such that the returned random position is somewhere along a tiled line from the start to the end position. The width, and height, of the returned `Area` are bounded separately.
 /// ```
 /// # use dungen_minion_geometry::*;
+/// use std::sync::Arc;
+/// use rayon::prelude::*;
+///
 /// use rand::{thread_rng, Rng};
 /// // The end position is an inclusive bound.
 /// // The maximum size is an inclusive bound.
 /// // The divergent min and max for position and size guarantee that the samples are separate.
-/// let area_range = AreaRange::new(
+/// let area_range = Arc::new(AreaRange::new(
 ///     PositionRange::new(Position::new(4, 14), Position::new(13, 23)),
 ///     SizeRange::new(Size::new(24, 34), Size::new(33, 43)),
-///     );
+///     ));
 /// // Random generators are hard to guarantee. But this should be viable.
-/// for _ in 0..5_000 {
+/// [0..5_000].par_iter().for_each(|_i| {
 ///     let rand_area = area_range.provide_area();
 ///     assert!(rand_area.position().x() >= 4 && rand_area.position().x() <= 13);
 ///     assert!(rand_area.position().y() >= 14 && rand_area.position().y() <= 23);
 ///     assert!(rand_area.size().width() >= 24 && rand_area.size().width() <= 33);
 ///     assert!(rand_area.size().height() >= 34 && rand_area.size().height() <= 43);
-/// }
+/// });
 ///
-/// let mut rng = thread_rng();
-/// for _ in 0..5_000 {
-///     let rand_area = rng.sample(area_range);
+/// [0..5_000].par_iter().for_each(|_i| {
+///     let rand_area = thread_rng().sample(*area_range);
 ///     assert!(rand_area.position().x() >= 4 && rand_area.position().x() <= 13);
 ///     assert!(rand_area.position().y() >= 14 && rand_area.position().y() <= 23);
 ///     assert!(rand_area.size().width() >= 24 && rand_area.size().width() <= 33);
 ///     assert!(rand_area.size().height() >= 34 && rand_area.size().height() <= 43);
-/// }
+/// });
 /// ```
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct AreaRange {

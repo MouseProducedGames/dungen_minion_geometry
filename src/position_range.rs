@@ -12,23 +12,25 @@ use super::{Coord, IsPosition, Position, ProvidesPosition};
 /// Both of these methods provide a random position between the start position in the range, and the end position in the range. The x- and y-components of the returned `Position` are bounded together, such that the returned random position is somewhere along a tiled line from the start to the end position.
 /// ```
 /// # use dungen_minion_geometry::*;
+/// use std::sync::Arc;
+/// use rayon::prelude::*;
+///
 /// use rand::{thread_rng, Rng};
 /// // The end position is an inclusive bound.
 /// // The divergent min and max for x and y guarantee that the samples are separate.
-/// let position_range = PositionRange::new(Position::new(4, 14), Position::new(13, 23));
+/// let position_range = Arc::new(PositionRange::new(Position::new(4, 14), Position::new(13, 23)));
 /// // Random generators are hard to guarantee. But this should be viable.
-/// for _ in 0..5_000 {
+/// [0..5_000].par_iter().for_each(|_i| {
 ///     let rand_position = position_range.provide_position();
 ///     assert!(rand_position.x() >= 4 && rand_position.x() <= 13);
 ///     assert!(rand_position.y() >= 14 && rand_position.y() <= 23);
-/// }
+/// });
 ///
-/// let mut rng = thread_rng();
-/// for _ in 0..5_000 {
-///     let rand_position = rng.sample(position_range);
+/// [0..5_000].par_iter().for_each(|_i| {
+///     let rand_position = thread_rng().sample(*position_range);
 ///     assert!(rand_position.x() >= 4 && rand_position.x() <= 13);
 ///     assert!(rand_position.y() >= 14 && rand_position.y() <= 23);
-/// }
+/// });
 /// ```
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct PositionRange {

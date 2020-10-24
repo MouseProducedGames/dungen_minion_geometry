@@ -12,23 +12,25 @@ use super::{Area, HasHeight, HasWidth, ProvidesArea, ProvidesSize, Size};
 /// Both of these methods provide a random size between the minimum size in the range, and the maximum size in the range. The width and height of the returned `Size` are bounded separately.
 /// ```
 /// # use dungen_minion_geometry::*;
+/// use std::sync::Arc;
+/// use rayon::prelude::*;
+///
 /// use rand::{thread_rng, Rng};
 /// // The maximum size is an inclusive bound.
 /// // The divergent min and max for width and height guarantee that the samples are separate.
-/// let size_range = SizeRange::new(Size::new(4, 14), Size::new(13, 23));
+/// let size_range = Arc::new(SizeRange::new(Size::new(4, 14), Size::new(13, 23)));
 /// // Random generators are hard to guarantee. But this should be viable.
-/// for _ in 0..5_000 {
+/// [0..5_000].par_iter().for_each(|_i| {
 ///     let rand_size = size_range.provide_size();
 ///     assert!(rand_size.width() >= 4 && rand_size.width() <= 13);
 ///     assert!(rand_size.height() >= 14 && rand_size.height() <= 23);
-/// }
+/// });
 ///
-/// let mut rng = thread_rng();
-/// for _ in 0..5_000 {
-///     let rand_size = rng.sample(size_range);
+/// [0..5_000].par_iter().for_each(|_i| {
+///     let rand_size = thread_rng().sample(*size_range);
 ///     assert!(rand_size.width() >= 4 && rand_size.width() <= 13);
 ///     assert!(rand_size.height() >= 14 && rand_size.height() <= 23);
-/// }
+/// });
 /// ```
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
 pub struct SizeRange {
