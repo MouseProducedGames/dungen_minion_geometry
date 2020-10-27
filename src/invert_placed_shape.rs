@@ -6,7 +6,7 @@
 use super::{
     Area, Containment, ContainsLocalPosition, ContainsPosition, HasArea, HasPosition, HasSize,
     IntersectsLocalPosition, IntersectsPosition, IsArea, IsSize, Placed, PlacedObject, PlacedShape,
-    Position, ProvidesArea, ProvidesSize, Shape, Size,
+    Position, ProvidesArea, ProvidesPlacedShape, ProvidesSize, Shape, Size,
 };
 
 /// Inverts the [`Containment`](enum.Containment.html) and intersection of the contained [`PlacedShape`](trait.PlacedShape.html).
@@ -145,6 +145,15 @@ where
 {
     fn provide_area(&self) -> Area {
         self.inner.provide_area()
+    }
+}
+
+impl<TPlacedShape: 'static> ProvidesPlacedShape for InvertPlacedShape<TPlacedShape>
+where
+    TPlacedShape: Clone + PlacedShape + ProvidesArea + ProvidesSize + Sized,
+{
+    fn provide_placed_shape(&self) -> Box<dyn PlacedShape> {
+        Box::new(self.clone())
     }
 }
 
