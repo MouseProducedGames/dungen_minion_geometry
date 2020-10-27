@@ -23,14 +23,18 @@ use super::{
 ///
 /// use std::collections::{HashSet, VecDeque};
 ///
-/// fn draw_oval(oval: Oval) {
+/// fn draw_oval(oval: Oval, visited: &HashSet<Position>) {
 ///     for y in oval.top()..=oval.bottom() {
 ///         for x in oval.left()..=oval.right() {
 ///             let position = Position::new(x, y);
-///             let draw_ch = match oval.contains_local_position(position) {
-///                 Containment::Disjoint => ' ',
-///                 Containment::Intersects => '#',
-///                 Containment::Contains => '.',
+///             let draw_ch = if visited.contains(&position) {
+///                 '*'
+///             } else {
+///                 match oval.contains_local_position(position) {
+///                     Containment::Disjoint => ' ',
+///                     Containment::Intersects => '#',
+///                     Containment::Contains => '.',
+///                 }
 ///             };
 ///             print!("{}", draw_ch);
 ///         }
@@ -38,12 +42,7 @@ use super::{
 ///     }
 /// }
 ///
-/// [0..5_000].par_iter().for_each(|_i| {
-///     let oval = Oval::new(
-///         Position::new(0, 0),
-///         SizeRange::new(Size::new(10, 10), Size::new(80, 80)).provide_size(),
-///     );
-///
+/// fn test_oval(oval: Oval) {
 ///     // Perform a flood-fill to ensure the oval is bounded.
 ///     let mut queue = VecDeque::new();
 ///     let mut visited = HashSet::new();
@@ -62,6 +61,9 @@ use super::{
 ///     };
 ///     let flocal_center_x = fwidth;
 ///     let flocal_center_y = fheight;
+///     // let pos_x = oval.left() + flocal_center_x as Coord;
+///     // let pos_y = oval.top() + flocal_center_y as Coord;
+///     // queue.push_back(Position::new(pos_x, pos_y));
 ///     for y in oval.top()..=oval.bottom() {
 ///         let fy = y as f64;
 ///         let adjusted_position_y = (fy - flocal_center_y).abs();
@@ -70,6 +72,8 @@ use super::{
 ///             let adjusted_position_x = (fx - flocal_center_x).abs();
 ///             if adjusted_position_x <= fmin_bounds
 ///                 && adjusted_position_y <= fmin_bounds
+///                 && ((fmin_bounds - adjusted_position_x.abs() >= 1.0)
+///                     || (fmin_bounds - adjusted_position_y.abs() >= 1.0))
 ///             {
 ///                 let start_position = Position::new(
 ///                     adjusted_position_x.round() as Coord,
@@ -99,12 +103,13 @@ use super::{
 ///                 let offset = Position::new(x, y);
 ///                 let test_position = current_position + offset;
 ///                 if !oval.intersects_local_position(test_position) {
-///                     continue;
+///                     draw_oval(oval, &visited);
+///                     panic!("Oval perimeter is not closed!");
 ///                 }
 ///                 match oval.contains_local_position(test_position) {
 ///                     // We have escaped the oval. The perimeter is not closed!
 ///                     Containment::Disjoint => {
-///                         draw_oval(oval);
+///                         draw_oval(oval, &visited);
 ///                         panic!("Oval perimeter is not closed!");
 ///                     }
 ///                     Containment::Intersects => continue,
@@ -117,9 +122,25 @@ use super::{
 ///             }
 ///         }
 ///     }
-///     // draw_oval(oval);
+/// }
+///
+/// (0..5_000).into_par_iter().for_each(|_i| {
+///     let oval = Oval::new(
+///         Position::new(0, 0),
+///         SizeRange::new(Size::new(5, 5), Size::new(80, 80)).provide_size(),
+///     );
+///
+///     test_oval(oval);
 /// });
-/// // panic!("Test.");
+///
+/// (5u32..80u32).into_par_iter().for_each(|i| {
+///     let oval = Oval::new(
+///         Position::new(0, 0),
+///         Size::new(i, i),
+///     );
+///
+///     test_oval(oval);
+/// });
 /// ```
 #[derive(Copy, Clone, Debug, Display)]
 pub struct Oval {
@@ -159,8 +180,8 @@ impl ContainsLocalPosition for Oval {
 
         if adjusted_position_x.abs() <= fmin_bounds
             && adjusted_position_y.abs() <= fmin_bounds
-            && (fmin_bounds - adjusted_position_x.abs() >= 1.0)
-            && (fmin_bounds - adjusted_position_y.abs() >= 1.0)
+            && ((fmin_bounds - adjusted_position_x.abs() >= 1.0)
+                || (fmin_bounds - adjusted_position_y.abs() >= 1.0))
         {
             Containment::Contains
         } else if !(self.intersects_local_position(position + Position::NORTH)
